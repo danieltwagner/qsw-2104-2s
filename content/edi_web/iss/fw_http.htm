@@ -1,0 +1,60 @@
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<script type="text/javascript"  src="../js/include.js"></script>
+<script language='javascript' type="text/javascript">
+	IncludeDefault(['/js/fw_http.js']);
+</script>
+</head>
+
+<body>
+<form name="formFwUpgradeHttp"  id="formFwUpgradeHttp" method="POST" action="/api/fw/upload" enctype="multipart/form-data">
+<input type="Hidden" name="Gambit" value="">
+
+<div name="main" id="main_upgrade" class="main">
+	<div class="textTitle" title="Firmware Upgrade"></div>
+	<div class="f_right"><input type="button" id="LogoutBtn" value="Logout" onclick="OnLogout()"></div>
+	<div id="content" class="content">
+		<div class="PageTbl">
+			<div class="TblHead" title="Firmware Upgrade"></div>
+			<table class="MibScalar" cellpadding="2" cellspacing="0">
+				<tr align="left">
+					<td class="textTh">File to Upgrade</td>
+					<td class="BgGray"><input style="text-align:left;width:80%;" type="file" id="firmware" name="firmware" size="40"></td>
+				</tr>
+			</table>
+		</div>
+		<div>
+			<div align=center>
+				<input type="button" id="ApplyBtn" value="Upgrade" onclick="OnApply()">
+				<input type="button" id="AbortBtn" value="Abort" onclick="OnAbort()">
+			</div>
+		</div>
+		<div>
+			<span id='transmitingStatus'></span>
+		</div>
+	</div>
+</div>
+<div name="main" id="main_complete" class="main" style="display:none">
+		<div class="textTitle" title="Firmware Upgrade Completed"></div>
+		<div class="f_right"><input type="button" id="LogoutBtn1" value="Logout" onclick="OnLogout()"></div>
+		<div id="content" class="content">
+			<div class="PageTbl">
+				<div class="TblHead" title="Firmware Upgrade Completed"></div>
+				<table class="MibScalar" cellpadding="2" cellspacing="0">
+					<tr align="center">
+						<td colspan=2><span id='ContinueStatus'></span></td>
+					</tr>
+				</table>
+			</div>
+			<div>
+				<div align=center>
+					<input type="button" id="ContinueBtn" value="Continue" onclick="OnContinue()">
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+</form>
+</body>
+</html>

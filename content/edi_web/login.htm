@@ -1,0 +1,131 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<head>
+<META http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>Login</title>
+<style>
+html{
+    height:100%;
+    background:#FFFFFF;
+}
+.tab_main{
+    width:690px;
+    position: relative;
+    top: 1900px;
+    left: 1300px;
+    background-color:#000000;
+    line-height: 80px;
+    text-align: center;
+    font-size: 20px;
+    color: #000000;
+}
+.bar_top{
+    width:690px;
+    height:120px
+    border-style:solid;
+    border-width:1;
+    border-bottom-style:groove;
+    border-bottom-width:0;
+    border-bottom-color:#E7F5FA;
+	background-color: #000000;
+    line-height: 110px;
+    text-align: right;
+    font-size: 20px;
+    font-family:Arial;
+}
+.info{
+	font-size: 20px;
+	font-family:Calibri;
+	color:red;
+	padding:30 0 0 105px;
+    font-family:Arial;
+	font-weight: bold;
+}
+.info_1{
+	font-size: 20px;
+	color:#ffffff;
+	padding:5px 0 35 108px;
+    font-family:Arial;
+	font-weight: bold;
+}
+
+.btn{
+	font-size:20px;
+	font-family:Calibri;
+	font-weight:normal;
+	width:123px;
+	padding: 5px;
+	display:inline-block;
+}
+.input_size{
+    width:280px;
+    height:35px;
+
+}
+</style>
+<script>
+    function get_server_ip(){
+        var re=/[ps]:\/\/[\[]*([\w\.\:]+)[\]]*[\/]*/;
+        if(document.location.href.toLowerCase().indexOf("script") <0)
+        {
+            var result=re.exec(document.location.href);
+            if(result){return result[1]}else{return"Device"}
+        }
+
+        return"Device"
+    }
+/* This function will load the script file without blocking the DOM rendering.
+ * i.e. the script file will be load at background. */
+function preLoadScript(url){
+    var script = document.createElement("script")
+    script.type = "text/javascript";
+    script.src = url;
+    document.getElementsByTagName("head")[0].appendChild(script);
+}
+
+if(window.top.location != window.location)
+{
+	window.top.location.href = window.location.href;
+}
+
+window.onload = function(){
+    function box(){
+    var oBox = document.getElementById('box');
+    var L1 = oBox.offsetWidth;
+    var H1 = oBox.offsetHeight;
+    var Left = (document.documentElement.clientWidth-L1)/2;
+    var top = (document.documentElement.clientHeight-H1)/2;
+    oBox.style.left = Left+'px';
+    oBox.style.top = top+'px';
+    }
+    box();
+    window.onresize = function(){
+        box();
+    }
+
+    /* P.S. To load js file here, they should be added into ev_handler.
+     * or you will get Error 304 ... */
+    preLoadScript("js/paging.js");
+    preLoadScript("js/edimax.js");
+    document.getElementById("ip_str").innerHTML=get_server_ip();
+}
+</script>
+<script type="text/javascript" src="js/jq191min.js"></script>
+</head>
+<body>
+<form method="POST">
+    <div id="box" class="tab_main">
+	<div class="bar_top">
+	</div>
+	<table class="info" cellpadding=10>
+    <tr><td width=100>IP</td><td><span id=ip_str></span></td></tr>
+    <input type="hidden" id="Login" name="user" value="admin">
+	<tr><td width=100>Password</td><td><input type="password" id="Password" name="pass" class="input_size"></td></tr>
+	</table>
+	<table class="info_1" cellpadding=10>
+	<tr align="center"><td width=150>&nbsp;</td><td align=center><input type="submit" class="btn" value="Login"></td></tr>
+	</table>
+	</div>
+</form>
+</body>
+</html>

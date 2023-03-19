@@ -1,0 +1,60 @@
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title>General Information</title>
+<script type="text/javascript"  src="../js/include.js"></script>
+<script language='javascript' type="text/javascript">
+	IncludeDefault(['/js/switch.js']);
+</script>
+</head>
+
+<body>
+<form name="formSwicth">
+<input type="Hidden" id="Gambit" value="">
+<div name="main" id="main" class="main" >
+	<div class="f_right">
+		<input type="button" id="LogoutBtn" value="Logout" onclick="OnLogout()">
+	</div>
+	<div id="content" class="content">
+	<div class="PageTbl">
+		<div class="TblHead" title="Firmware Information"></div>
+		<div class="TblBody">
+		<table class="MibScalar" cellpadding="2" cellspacing="0">
+			<tr>
+				<td class="textTh">Firmware Version</td>
+				<td class="BgGray" nowrap>
+					<span id='sysInfoFirmwareVersion'></span>
+				</td>
+			</tr>
+			<tr>
+				<td width="30%" class="textTh">Build Date</td>
+				<td width="70%" class="BgGray">
+					<span id='sysInfoFirmwareBuildDate'></span>
+				</td>
+			</tr>
+		</table>
+		</div>
+		<br>
+		<div class="TblHead" title="Switch Status"></div>
+		<div class="TblBody">
+		<table class="MibScalar" cellpadding="2" cellspacing="0">
+			<tr>
+				<td class="textTh" nowrap>Loop Detection</td>
+				<td class="BgGray" nowrap>
+					<span id='sysInfoLoopSwitch'></span>
+				</td>
+			</tr>
+			<tr>
+				<td width="30%" class="textTh">EEE Mode</td>
+				<td width="70%" class="BgGray">
+					<span id='sysInfoEEESwitch'></span>
+				</td>
+			</tr>
+		</table>
+		</div>
+	</div>
+	</div>
+</div>
+</form>
+</body>
+</html>

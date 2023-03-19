@@ -1,0 +1,113 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Frameset//EN">
+<html><head><title>Web Smart Switch</title>
+<meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<script type="text/javascript" src="js/jq191min.js"></script>
+<style>
+.css_iframe_class {
+	width:100%;
+	height:100%;
+	bgcolor: #ffffff;
+}
+.css_div_left {
+	height:100%;
+	width:249;
+	border:0;
+	position: absolute;
+	left: 0px;
+	top: 0px;
+}
+.css_div_main {
+	height:100%;
+	width:1017;
+	right:0px;
+	border:0;
+	position: absolute;
+	left: 249px;
+	top: 0px;
+}
+</style>
+<script language='javascript'>
+	function PageInit()
+	{
+		if (window.location.protocol !== "file:"){
+		  window.top.authdata = window.location.search;
+		}
+	}
+  function sizeFrame(){
+  if(document.getElementsByTagName('frameset').length||!document.getElementsByTagName('iframe').length)
+  return;
+  var frEls=document.getElementsByTagName('iframe'), s='scrollHeight',
+  frObs=window.frames, o='offsetHeight', b='body', de='documentElement';
+  for (var cs, hb, hd, d='document', i = frEls.length-1; i > -1; --i){
+  if(frObs[i][d][b].style.overflow)
+  cs=frObs[i][d][b].style.overflow;
+  frObs[i][d][b].style.overflow='hidden';
+  frEls[i].height=10;
+  frEls[i].height=Math.max(frObs[i][d][b][o], Math.max(frObs[i][d][de][o],
+  (hd=frObs[i][d][de][s]) != (hb=frObs[i][d][b][s])? Math.max(hd, hb):0))+
+  (frEls[i].height==frEls[i].offsetHeight&&frEls[i].getAttribute('frameborder',0)!=='0'?4:0);
+  frObs[i][d][b].style.overflow=typeof cs=='string'? cs : '';
+  };
+  if(!sizeFrame.setup){
+  for (var i = frEls.length-1; i > -1; --i)
+  sizeFrame.loadup(frEls[i]);
+  sizeFrame.setup=true;
+  }};
+
+  sizeFrame.loadup=function(o){
+  if ( typeof window.addEventListener != "undefined" )
+  o.addEventListener( "load", sizeFrame, false );
+  else if ( typeof window.attachEvent != "undefined" )
+  o.attachEvent( "onload", sizeFrame );
+  else {
+  if ( o.onload != null ) {
+  var oldOnload = o.onload;
+  o.onload = function(e) {
+  oldOnload(e);
+  sizeFrame();
+  };
+  }
+  else
+  o.onload = sizeFrame;
+  }};
+
+  if(document.getElementsByTagName&&window.frames)
+  sizeFrame.loadup(window);
+
+  window.top.startSessionCheck = function() {
+	    $.ajax({
+	       url: '/session_check',
+	       contentType: "application/json",
+	       dataType: 'json',
+	       timeout: 10000,
+	       success: function(data) {
+	         var status = data.status;
+	         if (data.status != 0) {
+	           window.location = "/login.htm";
+	         } else {
+	           window.top.sessionTimer = setTimeout(window.top.startSessionCheck, 10000);
+	         }
+	       },
+	       error: function(xhr, status, error) {
+	           window.location = "/login.htm";
+	       },
+
+	     }).always(function() {});
+  };
+
+  window.top.stopSessionCheck = function() {
+      clearTimeout(this.sessionTimer);
+  }
+
+  window.top.startSessionCheck();
+</script>
+</head>
+<body onload="PageInit()" style="margin:0;padding:0;">
+<div style="height:100%!important; border:0; position: relative;">
+        <div class="css_div_main">
+            <iframe name="myframe" id="myframe" src="iss/switch.htm"  scrolling="no" frameborder="0" class="css_iframe_class"></iframe>
+		</div>
+</div>
+</body>
+</html>
