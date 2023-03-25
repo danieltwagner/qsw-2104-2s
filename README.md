@@ -1,6 +1,177 @@
 ## QNAP QSW-2104-2S
 https://forum.openwrt.org/t/hacking-into-qnap-qsw-1105-5t-2-5g-broadcom-based-switch/109381
 
+During startup the switch listens for web requests at 1.1.1.100 for 1 minute. If during that time no login happens it will stop listening.
+Once a session has been established there is a 5 minute inactivity window after which the switch stops responding to web requests.
+
+You can log in with password `Qsw_Update`. Once you're logged in there is an option to upload a new firmware image but will not accept the uncompressed firmware dump (`flash1.bin`, see below). I haven't yet investigated further.
+
+It is worth noting that besides this (limited) functionality the follwing api routes exist once the admin has logged in:
+
+```
+/api/autovoip/oui/create
+/api/autovoip/oui/delete
+/api/autovoip/oui/get
+/api/autovoip/state/get
+/api/autovoip/state/set
+/api/cfg/default
+/api/cfg/save
+/api/cfg/upload
+/api/cfg/validate
+/api/dev
+/api/dev/cfg/view
+/api/dos/get
+/api/dos/set
+/api/fw/data/get
+/api/fw/image/toggle
+/api/fw/upload
+/api/fw/version/set
+/api/host/add
+/api/host/delete
+/api/host/get
+/api/host/state/set
+/api/intf/list/get
+/api/l2/table/count/get
+/api/l2/table/get
+/api/lag/create
+/api/lag/delete
+/api/lag/get
+/api/lag/hash/get
+/api/lag/hash/set
+/api/lag/intf/set
+/api/lag/portmap/get
+/api/lbd/global/get
+/api/lbd/global/set
+/api/lbd/port/get
+/api/lbd/port/set
+/api/mirror/delete
+/api/mirror/get
+/api/mirror/set
+/api/port/admin/get
+/api/port/get
+/api/port/link/state/get
+/api/port/list/get
+/api/port/phys/type/get
+/api/port/set
+/api/port/speed/max/get
+/api/port/stats/clear
+/api/port/stats/get
+/api/port/stats_err/get
+/api/port/stats_rst/set
+/api/qos/dot1p/mapping/get
+/api/qos/dot1p/mapping/set
+/api/qos/dscp/mapping/get
+/api/qos/dscp/mapping/set
+/api/qos/port/ratelimit/get
+/api/qos/port/ratelimit/set
+/api/qos/port/sched/get
+/api/qos/port/sched/set
+/api/session/login
+/api/session/logout
+/api/sntp/get
+/api/sntp/set
+/api/storm/get
+/api/storm/set
+/api/system/led/set
+/api/system/logintime/set
+/api/system/loopmode/set
+/api/system/macaddr/set
+/api/system/microled/set
+/api/system/params/get
+/api/system/params/set
+/api/system/password/set
+/api/system/phy_fw_ver/get
+/api/system/reboot
+/api/system/serial_number/set
+/api/system/stop_ip/set
+/api/system/sysloop_led/set
+/api/system/testmode/set
+/api/user/detete
+/api/user/get
+/api/user/set
+/api/vlan/create
+/api/vlan/delete
+/api/vlan/get
+/api/vlan/mode/get
+/api/vlan/mode/set
+/api/vlan/port/get
+/api/vlan/port/set
+/api/vlan/set
+/session_check
+```
+
+API activity will reset the inactivity window.
+Note that it appears that there can only be one session simultaneously, i.e. when there's an active api session the web login won't work. However, the web user's session id can be shared with api requests.
+
+Example API usage creating a new 802.1q VLAN (id 2), assigning tagged port membership for port 5 (leftmost SFP+) and untagged for ports 0 and 1 (rightmost 2.5g ports), as well as setting the PVID for ports 0 and 1:
+```
+$ curl 1.1.1.100/api/session/login -d '{"user":"admin", "pwd":"Qsw_Update"}' -v
+*   Trying 1.1.1.100:80...
+* Connected to 1.1.1.100 (1.1.1.100) port 80 (#0)
+> POST /api/session/login HTTP/1.1
+> Host: 1.1.1.100
+> User-Agent: curl/7.86.0
+> Accept: */*
+> Content-Length: 36
+> Content-Type: application/x-www-form-urlencoded
+>
+* Mark bundle as not supporting multiuse
+* HTTP 1.0, assume close after body
+< HTTP/1.0 200 OK
+< Cache-Control: max-age=0, post-check=0, pre-check=0, no-store, no-cache, must-revalidate
+< Content-Type: application/json; charset=utf-8
+< Set-Cookie: mgs=b5502488f7254cd6;
+<
+{"status": 0}
+
+# Status of the system after boot:
+
+$ curl 1.1.1.100/api/vlan/mode/get -H "Cookie: mgs=b5502488f7254cd6"
+{"status":0,"mode":1}
+
+$ curl 1.1.1.100/api/vlan/port/get -H "Cookie: mgs=b5502488f7254cd6"
+{"port_data":[{"port":0, "pvid":1, "accept":0},{"port":1, "pvid":1, "accept":0},{"port":2, "pvid":1, "accept":0},{"port":3, "pvid":1, "accept":0},{"port":4, "pvid":1, "accept":0},{"port":5, "pvid":1, "accept":0}],"port_count":6,"port_first":0,"status":0}
+
+$ curl 1.1.1.100/api/vlan/get -H "Cookie: mgs=b5502488f7254cd6"
+{"vlanData":[{"id":1,"vlan":1,"tag":[],"untag":[0,1,2,3,4,5]}],"status":0}
+
+$ curl 1.1.1.100/api/vlan/get -H "Cookie: mgs=b5502488f7254cd6" -d '{"vlan":1}'
+{"vlanData":{"id":1,"vlan":1,"inUse":[],"tag":[],"untag":[0,1,2,3,4,5]},"mode":1,"vlanCountMax":128,"vlanidMin":1,"vlanidMax":4095,"vlanList": [1],"status":0}
+
+# Creating new VLAN
+
+$ curl 1.1.1.100/api/vlan/create -H "Cookie: mgs=b5502488f7254cd6" -d '{"vlan":2}'
+{"status":0}
+
+$ curl 1.1.1.100/api/vlan/get -H "Cookie: mgs=b5502488f7254cd6"
+{"vlanData":[{"id":1,"vlan":1,"tag":[],"untag":[0,1,2,3,4,5]},{"id":2,"vlan":2,"tag":[],"untag":[]}],"status":0}
+
+# Untagging ports from VLAN 1 (must happen before tagging them for the new VLAN)
+
+$ curl 1.1.1.100/api/vlan/set -H "Cookie: mgs=b5502488f7254cd6" -d '{"vlan":1, "membership":[{"intf":0,"mbr":0},{"intf":1,"mbr":0},{"intf":2,"mbr":1},{"intf":3,"mbr":1},{"intf":4,"mbr":1},{"intf":5,"mbr":1}]}'
+{"status": 0}
+
+# At this point ports 0 and 1 aren't forwarding traffic but can still talk to the API
+
+$ curl 1.1.1.100/api/vlan/get -H "Cookie: mgs=b5502488f7254cd6"
+{"vlanData":[{"id":1,"vlan":1,"tag":[],"untag":[2,3,4,5]},{"id":2,"vlan":2,"tag":[],"untag":[]}],"status":0}
+
+$ curl 1.1.1.100/api/vlan/set -H "Cookie: mgs=b5502488f7254cd6" -d '{"vlan":2, "membership":[{"intf":0,"mbr":1},{"intf":1,"mbr":1},{"intf":2,"mbr":0},{"intf":3,"mbr":0},{"intf":4,"mbr":0},{"intf":5,"mbr":2}]}'
+{"status": 0}
+
+$ curl 1.1.1.100/api/vlan/get -H "Cookie: mgs=b5502488f7254cd6"
+{"vlanData":[{"id":1,"vlan":1,"tag":[],"untag":[2,3,4,5]},{"id":2,"vlan":2,"tag":[5],"untag":[0,1]}],"status":0}
+
+$ Ports 0 and 1 are forwarding traffic again. Note that PVID has changed automatically:
+
+$ curl 1.1.1.100/api/vlan/port/get -H "Cookie: mgs=b5502488f7254cd6"
+{"port_data":[{"port":0, "pvid":2, "accept":0},{"port":1, "pvid":2, "accept":0},{"port":2, "pvid":1, "accept":0},{"port":3, "pvid":1, "accept":0},{"port":4, "pvid":1, "accept":0},{"port":5, "pvid":1, "accept":0}],"port_count":6,"port_first":0,"status":0}
+
+$ curl 1.1.1.100/api/vlan/port/get -H "Cookie: mgs=b5502488f7254cd6" -d '{"port":5}'
+{"port_data":{"port":5, "pvid":1, "accept":0},"port_count":6,"port_first":0,"status":0}
+```
+
+## Serial console
 
 With ethernet ports facing towards you, pins are from left to right:
 VCC, switch RX (connect to serial TX), GND, switch TX (connect to serial RX).
@@ -138,62 +309,51 @@ DECIMAL       HEXADECIMAL     DESCRIPTION
 5661103       0x5661AF        PEM certificate
 ```
 
-Based on the bootloader's list output above, dump the first image:
+Based on the bootloader's list output above, dump the bootloader as well as the firmware image:
 ```
+dd bs=393216 count=1 if=flash.bin of=flash0.bin
 dd skip=393216 iflag=skip_bytes bs=3092020 count=1 if=flash.bin of=flash1.bin
 ```
 
-Both images start with the magic bytes `f8ff`, which also appear in other parts of the image:
+Both images start with the magic bytes `f8ff`, which also appear in other parts of the bootloader and first image:
 ```
-$ binwalk -R "\xf8\xff" flash.bin
+$ $ binwalk -R "\xf8\xff" flash0.bin
+
 DECIMAL       HEXADECIMAL     DESCRIPTION
 --------------------------------------------------------------------------------
 65536         0x10000         Raw signature (\xf8\xff)
 99196         0x1837C         Raw signature (\xf8\xff)
 122556        0x1DEBC         Raw signature (\xf8\xff)
 298456        0x48DD8         Raw signature (\xf8\xff)
-393216        0x60000         Raw signature (\xf8\xff)
-393671        0x601C7         Raw signature (\xf8\xff)
-472533        0x735D5         Raw signature (\xf8\xff)
-1108595       0x10EA73        Raw signature (\xf8\xff)
-1109563       0x10EE3B        Raw signature (\xf8\xff)
-1109699       0x10EEC3        Raw signature (\xf8\xff)
-1109859       0x10EF63        Raw signature (\xf8\xff)
-1110119       0x10F067        Raw signature (\xf8\xff)
-1270373       0x136265        Raw signature (\xf8\xff)
-1272125       0x13693D        Raw signature (\xf8\xff)
-1291712       0x13B5C0        Raw signature (\xf8\xff)
-1467612       0x1664DC        Raw signature (\xf8\xff)
-1804183       0x1B8797        Raw signature (\xf8\xff)
-1808075       0x1B96CB        Raw signature (\xf8\xff)
-1810803       0x1BA173        Raw signature (\xf8\xff)
-1810827       0x1BA18B        Raw signature (\xf8\xff)
-1813635       0x1BAC83        Raw signature (\xf8\xff)
-1814540       0x1BB00C        Raw signature (\xf8\xff)
-1831424       0x1BF200        Raw signature (\xf8\xff)
-1832960       0x1BF800        Raw signature (\xf8\xff)
-3481316       0x351EE4        Raw signature (\xf8\xff)
-3801088       0x3A0000        Raw signature (\xf8\xff)
-3801543       0x3A01C7        Raw signature (\xf8\xff)
-3880405       0x3B35D5        Raw signature (\xf8\xff)
-4516467       0x44EA73        Raw signature (\xf8\xff)
-4517435       0x44EE3B        Raw signature (\xf8\xff)
-4517571       0x44EEC3        Raw signature (\xf8\xff)
-4517731       0x44EF63        Raw signature (\xf8\xff)
-4517991       0x44F067        Raw signature (\xf8\xff)
-4678245       0x476265        Raw signature (\xf8\xff)
-4679997       0x47693D        Raw signature (\xf8\xff)
-4699584       0x47B5C0        Raw signature (\xf8\xff)
-4875484       0x4A64DC        Raw signature (\xf8\xff)
-5212055       0x4F8797        Raw signature (\xf8\xff)
-5215947       0x4F96CB        Raw signature (\xf8\xff)
-5218675       0x4FA173        Raw signature (\xf8\xff)
-5218699       0x4FA18B        Raw signature (\xf8\xff)
-5221507       0x4FAC83        Raw signature (\xf8\xff)
-5222412       0x4FB00C        Raw signature (\xf8\xff)
-5239296       0x4FF200        Raw signature (\xf8\xff)
-5240832       0x4FF800        Raw signature (\xf8\xff)
-6889188       0x691EE4        Raw signature (\xf8\xff)
-7209472       0x6E0200        Raw signature (\xf8\xff)
-7210496       0x6E0600        Raw signature (\xf8\xff)
+
+$ binwalk -R "\xf8\xff" flash1.bin
+
+DECIMAL       HEXADECIMAL     DESCRIPTION
+--------------------------------------------------------------------------------
+0             0x0             Raw signature (\xf8\xff)
+455           0x1C7           Raw signature (\xf8\xff)
+79317         0x135D5         Raw signature (\xf8\xff)
+715379        0xAEA73         Raw signature (\xf8\xff)
+716347        0xAEE3B         Raw signature (\xf8\xff)
+716483        0xAEEC3         Raw signature (\xf8\xff)
+716643        0xAEF63         Raw signature (\xf8\xff)
+716903        0xAF067         Raw signature (\xf8\xff)
+877157        0xD6265         Raw signature (\xf8\xff)
+878909        0xD693D         Raw signature (\xf8\xff)
+898496        0xDB5C0         Raw signature (\xf8\xff)
+1074396       0x1064DC        Raw signature (\xf8\xff)
+1410967       0x158797        Raw signature (\xf8\xff)
+1414859       0x1596CB        Raw signature (\xf8\xff)
+1417587       0x15A173        Raw signature (\xf8\xff)
+1417611       0x15A18B        Raw signature (\xf8\xff)
+1420419       0x15AC83        Raw signature (\xf8\xff)
+1421324       0x15B00C        Raw signature (\xf8\xff)
+1438208       0x15F200        Raw signature (\xf8\xff)
+1439744       0x15F800        Raw signature (\xf8\xff)
+3088100       0x2F1EE4        Raw signature (\xf8\xff)
 ```
+
+The firmware image is running [Mongoose/6.14](https://github.com/cesanta/mongoose/tree/ab650ec5c99ceb52bb9dc59e8e8ec92a2724932b).
+
+After some spelunking I figured out that the image is mapped to location 0x10010000.
+1MB of RAM is mapped to 0x24800000 - 0x248FFFFF, along with other locations (see [here](https://github.com/Broadcom/Broadcom-Compute-Connectivity-Software-robo2-rsdk/blob/45422951b8db049be5dc8b0b60cd5dfb8183ae98/include/soc/robo2/bcm53158/memmap_bcm53158_a0.h)).
