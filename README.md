@@ -171,6 +171,12 @@ $ curl 1.1.1.100/api/vlan/port/get -H "Cookie: mgs=b5502488f7254cd6" -d '{"port"
 {"port_data":{"port":5, "pvid":1, "accept":0},"port_count":6,"port_first":0,"status":0}
 ```
 
+If we like this config, we can persist it for the next boot:
+```
+$ curl 1.1.1.100/api/cfg/save -H "Cookie: mgs=b5502488f7254cd6"
+{"status": 0}
+```
+
 ## Serial console
 
 With ethernet ports facing towards you, pins are from left to right:
