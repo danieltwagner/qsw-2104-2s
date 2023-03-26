@@ -103,29 +103,28 @@ It is worth noting that besides this (limited) functionality the follwing api ro
 API activity will reset the inactivity window.
 Note that it appears that there can only be one session simultaneously, i.e. when there's an active api session the web login won't work. However, the web user's session id can be shared with api requests.
 
-Example API usage creating a new 802.1q VLAN (id 2), assigning tagged port membership for port 5 (leftmost SFP+) and untagged for ports 0 and 1 (rightmost 2.5g ports), as well as setting the PVID for ports 0 and 1:
+Example API usage creating a new 802.1q VLAN (id 2), assigning tagged port membership for port 5 (leftmost SFP+) and untagged for ports 0 and 1 (rightmost 2.5g ports). Setting untagged ports will automatically also set port PVID.
 ```
-$ curl 1.1.1.100/api/session/login -d '{"user":"admin", "pwd":"Qsw_Update"}' -v
-*   Trying 1.1.1.100:80...
-* Connected to 1.1.1.100 (1.1.1.100) port 80 (#0)
-> POST /api/session/login HTTP/1.1
-> Host: 1.1.1.100
-> User-Agent: curl/7.86.0
-> Accept: */*
-> Content-Length: 36
-> Content-Type: application/x-www-form-urlencoded
->
-* Mark bundle as not supporting multiuse
-* HTTP 1.0, assume close after body
-< HTTP/1.0 200 OK
-< Cache-Control: max-age=0, post-check=0, pre-check=0, no-store, no-cache, must-revalidate
-< Content-Type: application/json; charset=utf-8
+$ curl 1.1.1.100/api/session/login -d '{"user":"admin", "pwd":"Qsw_Update"}' -v 2>&1 | grep Set-Cookie
 < Set-Cookie: mgs=b5502488f7254cd6;
-<
+$ curl 1.1.1.100/api/vlan/create -H "Cookie: mgs=b5502488f7254cd6" -d '{"vlan":2}'
+$ curl 1.1.1.100/api/vlan/set -H "Cookie: mgs=b5502488f7254cd6" -d '{"vlan":1, "membership":[{"intf":0,"mbr":0},{"intf":1,"mbr":0},{"intf":2,"mbr":1},{"intf":3,"mbr":1},{"intf":4,"mbr":1},{"intf":5,"mbr":1}]}'
+$ curl 1.1.1.100/api/vlan/set -H "Cookie: mgs=b5502488f7254cd6" -d '{"vlan":2, "membership":[{"intf":0,"mbr":1},{"intf":1,"mbr":1},{"intf":2,"mbr":0},{"intf":3,"mbr":0},{"intf":4,"mbr":0},{"intf":5,"mbr":2}]}'
+```
+
+Persist config for the next boot:
+```
+$ curl 1.1.1.100/api/cfg/save -H "Cookie: mgs=b5502488f7254cd6"
 {"status": 0}
+```
 
-# Status of the system after boot:
+Setting longer login time (1 year), will also automatically set session timeout to 1 day. Note that this doesn't get persisted across reboots.
+```
+curl 1.1.1.100/api/system/logintime/set -H "Cookie: mgs=b5502488f7254cd6" -d '{"canlogin_time":31536000}
+```
 
+# Configuration before any VLAN changes:
+```
 $ curl 1.1.1.100/api/vlan/mode/get -H "Cookie: mgs=b5502488f7254cd6"
 {"status":0,"mode":1}
 
@@ -137,45 +136,8 @@ $ curl 1.1.1.100/api/vlan/get -H "Cookie: mgs=b5502488f7254cd6"
 
 $ curl 1.1.1.100/api/vlan/get -H "Cookie: mgs=b5502488f7254cd6" -d '{"vlan":1}'
 {"vlanData":{"id":1,"vlan":1,"inUse":[],"tag":[],"untag":[0,1,2,3,4,5]},"mode":1,"vlanCountMax":128,"vlanidMin":1,"vlanidMax":4095,"vlanList": [1],"status":0}
-
-# Creating new VLAN
-
-$ curl 1.1.1.100/api/vlan/create -H "Cookie: mgs=b5502488f7254cd6" -d '{"vlan":2}'
-{"status":0}
-
-$ curl 1.1.1.100/api/vlan/get -H "Cookie: mgs=b5502488f7254cd6"
-{"vlanData":[{"id":1,"vlan":1,"tag":[],"untag":[0,1,2,3,4,5]},{"id":2,"vlan":2,"tag":[],"untag":[]}],"status":0}
-
-# Untagging ports from VLAN 1 (must happen before tagging them for the new VLAN)
-
-$ curl 1.1.1.100/api/vlan/set -H "Cookie: mgs=b5502488f7254cd6" -d '{"vlan":1, "membership":[{"intf":0,"mbr":0},{"intf":1,"mbr":0},{"intf":2,"mbr":1},{"intf":3,"mbr":1},{"intf":4,"mbr":1},{"intf":5,"mbr":1}]}'
-{"status": 0}
-
-# At this point ports 0 and 1 aren't forwarding traffic but can still talk to the API
-
-$ curl 1.1.1.100/api/vlan/get -H "Cookie: mgs=b5502488f7254cd6"
-{"vlanData":[{"id":1,"vlan":1,"tag":[],"untag":[2,3,4,5]},{"id":2,"vlan":2,"tag":[],"untag":[]}],"status":0}
-
-$ curl 1.1.1.100/api/vlan/set -H "Cookie: mgs=b5502488f7254cd6" -d '{"vlan":2, "membership":[{"intf":0,"mbr":1},{"intf":1,"mbr":1},{"intf":2,"mbr":0},{"intf":3,"mbr":0},{"intf":4,"mbr":0},{"intf":5,"mbr":2}]}'
-{"status": 0}
-
-$ curl 1.1.1.100/api/vlan/get -H "Cookie: mgs=b5502488f7254cd6"
-{"vlanData":[{"id":1,"vlan":1,"tag":[],"untag":[2,3,4,5]},{"id":2,"vlan":2,"tag":[5],"untag":[0,1]}],"status":0}
-
-$ Ports 0 and 1 are forwarding traffic again. Note that PVID has changed automatically:
-
-$ curl 1.1.1.100/api/vlan/port/get -H "Cookie: mgs=b5502488f7254cd6"
-{"port_data":[{"port":0, "pvid":2, "accept":0},{"port":1, "pvid":2, "accept":0},{"port":2, "pvid":1, "accept":0},{"port":3, "pvid":1, "accept":0},{"port":4, "pvid":1, "accept":0},{"port":5, "pvid":1, "accept":0}],"port_count":6,"port_first":0,"status":0}
-
-$ curl 1.1.1.100/api/vlan/port/get -H "Cookie: mgs=b5502488f7254cd6" -d '{"port":5}'
-{"port_data":{"port":5, "pvid":1, "accept":0},"port_count":6,"port_first":0,"status":0}
 ```
 
-If we like this config, we can persist it for the next boot:
-```
-$ curl 1.1.1.100/api/cfg/save -H "Cookie: mgs=b5502488f7254cd6"
-{"status": 0}
-```
 
 ## Serial console
 
