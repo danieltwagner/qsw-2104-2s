@@ -4,8 +4,6 @@ import os
 import struct
 import sys
 
-from fastcrc import crc32
-
 MAGIC_BYTES = 0x20201103
 BASE_ADDR   = 0x10010000
 
