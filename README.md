@@ -1,13 +1,24 @@
-## QNAP QSW-2104-2S
+## Turning the QNAP QSW-2104-2S into a managed switch
+
 https://forum.openwrt.org/t/hacking-into-qnap-qsw-1105-5t-2-5g-broadcom-based-switch/109381
+
+The QNAP QSW-2104-2S is based on Broadcom's Robo2 platform and has management capabilities that are artificially restricted.
+Fortunately it is possible to partially overcome these limitations, as described below.
+
+Most likely the APIs described below are also available on the QSW-2104-2T, QSW-1105-5T and QSW-1108-8T, as well as other Robo2 devices, but I strongly advise not to upload the modified firmware to those devices. If you are aware of other devices where this technique works please file an issue and I'll include them here.
+
+## Firmware update to keep web interface up longer (optional)
 
 During startup the switch listens for web requests at 1.1.1.100 for 1 minute. If during that time no login happens it will stop listening.
 Once a session has been established there is a 5 minute inactivity window after which the switch stops responding to web requests.
 
-You can log in with password `Qsw_Update`. Once you're logged in there is an option to upload a new firmware image but will not accept the uncompressed firmware dump (`flash1.bin`, see below). I haven't yet investigated further.
+The modified `no_timeout_fw_update.bin` firmware contained within this repository can be uploaded to stop the switch from cutting off web requests after 1 minute.
 
-It is worth noting that besides this (limited) functionality the follwing api routes exist once the admin has logged in:
+To update the firmware, set your computer's IP to e.g. 1.1.1.200 and navigate to http://1.1.1.100 once the LEDs signal the switch has finished booting. Then log in with password `Qsw_Update` and proceed to update the modified firmware.
 
+## API routes
+
+While the web interface is limited to only firmware updates, the switch does offer the follwing api routes:
 ```
 /api/autovoip/oui/create
 /api/autovoip/oui/delete
@@ -118,7 +129,7 @@ $ curl 1.1.1.100/api/cfg/save -H "Cookie: mgs=b5502488f7254cd6"
 {"status": 0}
 ```
 
-Setting longer login time (1 year), will also automatically set session timeout to 1 day. Note that this doesn't get persisted across reboots.
+If you're not using the modified firmware (above), setting a longer login time window once logged in may be advisable. This will also automatically set session timeout to 1 day. Note that this setting does not get persisted across reboots.
 ```
 curl 1.1.1.100/api/system/logintime/set -H "Cookie: mgs=b5502488f7254cd6" -d '{"canlogin_time":31536000}
 ```

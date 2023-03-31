@@ -51,7 +51,7 @@ def main(path_in: str, path_out: str, version_str):
 
 if __name__ == '__main__':
     if len(sys.argv) < 3:
-        print(f"Usage: {sys.argv[0]} input_file name")
+        print(f"Usage: {sys.argv[0]} input_file version_string")
         sys.exit(1)
 
     path_in = sys.argv[1]
