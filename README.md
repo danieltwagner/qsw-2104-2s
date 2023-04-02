@@ -20,96 +20,150 @@ To update the firmware, set your computer's IP to e.g. 1.1.1.200 and navigate to
 
 While the web interface is limited to only firmware updates, the switch does offer the follwing api routes (documented best effort and largely untested, if you spot any errors or omissions please file an issue!):
 
-| Path                          | JSON fields in POST Body                                  | Notes                                      |
-| :---------------------------- | --------------------------------------------------------- | ------------------------------------------ |
-| /api/autovoip/oui/create      | oui: "AA:BB:CC"                                           |                                            |
-| /api/autovoip/oui/delete      | oui: "AA:BB:CC"                                           |                                            |
-| /api/autovoip/oui/get         | none                                                      |                                            |
-| /api/autovoip/state/get       | none                                                      |                                            |
-| /api/autovoip/state/set       | gstate: uint                                              |                                            |
-| /api/cfg/default              | none                                                      |                                            |
-| /api/cfg/save                 | none                                                      |                                            |
-| /api/cfg/upload               | http multi-part upload                                    |                                            |
-| /api/cfg/validate             | none                                                      |                                            |
-| /api/dev/cfg/view             | query param "download"                                    | probably wants a path like /cfg:config.jsn |
-| /api/dos/get                  | none                                                      |                                            |
-| /api/dos/set                  | macLand: uint,<br />ipDaEqSa: uint,<br />tcpDpEqSp: uint,<br />udpDpEqSp: uint,<br />tcpNullScan: uint,<br />tcpXmasScan: uint,<br />tcpSynFinScan: uint,<br />tcpSync: uint,<br />tcpHdrFrag: uint,<br />ipv4IcmpFrag: uint,<br />ipv6IcmpFrag: uint,<br />icmp4LongPing: uint,<br />icmp6LongPing: uint |                                         |
-| /api/fw/data/get              | none                                                      |                                            |
-| /api/fw/image/toggle          | none                                                      |                                            |
-| /api/fw/upload                | http multi-part upload                                    |                                            |
-| /api/fw/version/set           | index: int,<br />verInfo: str                                  |                                            |
-| /api/host/add                 | ipv6: 0,<br />ipaddr: "123.123.123.123"                        | reads like it wouldn't work for ipv6       |
-| /api/host/delete              | ipv6: 0,<br />ipaddr: "123.123.123.123"                        | reads like it wouldn't work for ipv6       |
-| /api/host/get                 | none                                                      |                                            |
-| /api/host/state/set           | enable: uint                                              |                                            |
-| /api/intf/list/get            | none                                                      |                                            |
-| /api/l2/table/count/get       | none                                                      |                                            |
-| /api/l2/table/get             | start: {mac: vlan: portid:}                               |                                            |
-| /api/lag/create               | descr:,<br />members:                                          | tbd on format                              |
-| /api/lag/delete               | lag: uint                                                 |                                            |
-| /api/lag/get                  | lag: uint                                                 |                                            |
-| /api/lag/hash/get             | none                                                      |                                            |
-| /api/lag/hash/set             | hash:                                                     | tbd on format                              |
-| /api/lag/intf/set             | id: uint,<br />descr:,<br />members:                                | tbd on format                              |
-| /api/lag/portmap/get          | none                                                      |                                            |
-| /api/lbd/global/get           | none                                                      |                                            |
-| /api/lbd/global/set           | globalEnabled: uint,<br />txTime: uint,<br />shutdownTime: uint     |                                            |
-| /api/lbd/port/get             | none                                                      |                                            |
-| /api/lbd/port/set             | port: uint,<br />enabled: uint,<br />action: uint,<br />transmit: uint   |                                            |
-| /api/mirror/delete            | none                                                      |                                            |
-| /api/mirror/get               | none                                                      |                                            |
-| /api/mirror/set               | descr:,<br />destPort:,<br />egressSrcPorts: []str,<br />ingressSrcPorts: []str,<br />egressSrcVLANs: []str,<br />ingressSrcVLANs: []str |  tbd on format|
-| /api/port/admin/get           | port:uint                                                 |                                            |
-| /api/port/get                 | port: uint                                                | parameter is optional                      |
-| /api/port/link/state/get      | port: uint                                                |                                            |
-| /api/port/list/get            | none                                                      |                                            |
-| /api/port/phys/type/get       | port:uint                                                 |                                            |
-| /api/port/set                 | port: uint,<br />descr: str,<br />admin: uint,<br />autoneg: 0/1,<br />speed: uint,<br />fdx: uint,<br />flow: uint | autoneg, speed, and fdx must be set together |
-| /api/port/speed/max/get       | port:uint                                                 |                                            |
-| /api/port/stats_err/get       | port:uint                                                 |                                            |
-| /api/port/stats_rst/set       | port:uint                                                 |                                            |
-| /api/port/stats/clear         | ports: []str                                              | tbd on format                              |
-| /api/port/stats/get           | port: uint                                                |                                            |
-| /api/qos/dot1p/mapping/get    | none                                                      |                                            |
-| /api/qos/dot1p/mapping/set    | dot1p: []str                                              | tbd on format                              |
-| /api/qos/dscp/mapping/get     | none                                                      |                                            |
-| /api/qos/dscp/mapping/set     | dscp: []str                                               | tbd on format                              |
-| /api/qos/port/ratelimit/get   | port: uint                                                |                                            |
-| /api/qos/port/ratelimit/set   | port: uint, ingress: { admin: uint, rate: uint: unit:("pps", maybe more)}, egress: { admin: uint, rate: uint: unit:("pps", maybe more)},  | tbd on format |
-| /api/qos/port/sched/get       | port: uint                                                |                                            |
-| /api/qos/port/sched/set       | port: uint, mode: uint, rrWeights:                        | tbd on format                              |
-| /api/session/login            | user: str, pass: str                                      |                                            |
-| /api/session/logout           | none                                                      |                                            |
-| /api/sntp/get                 | none                                                      |                                            |
-| /api/sntp/set                 | state: 0/1, poll: uint, ipv4: "123.123.123.123", tz: uint |                                            |
-| /api/storm/get                | none                                                      |                                            |
-| /api/storm/set                | unicast: {admin: uint},<br />unicast: {meas:, level: uint},<br />multicast: {admin: uint},<br />multicast: {meas:, level: uint},<br />broadcast: {admin: uint},<br />broadcast: {meas:, level: uint} | "meas" format is tbd |
-| /api/system/led/set           | led_offset: uint,<br />value: uint                             |                                            |
-| /api/system/logintime/set     | can_logintime: uint                                       | Also sets session timeout to 1d (fixed)    |
-| /api/system/loopmode/set      | loopback_mode: 0/1                                        | Enables/disables loopback detection        |
-| /api/system/macaddr/set       | mac_addr: "00:11:22:33:44:55:66"                          |                                            |
-| /api/system/microled/set      | led_mode:uint                                             |                                            |
-| /api/system/params/get        | none                                                      |                                            |
-| /api/system/params/set        | cfg_descr: str(64)<br />dev_id: str(32)<br />dev_name: str(32)<br />dev_loc: str(32)<br />dev_desc: str(31)<br />dhcpv4: 0/1<br />ssl: 0/1<br />l2Agetime: uint<br />sessTTL: uint<br />ipv4: "123.123.123.123"<br />subnet:"123.123.123.123"<br />gw: "123.123.123.123"  |    Must supply (ipv4, subnet, gw) at the same time      |
-| /api/system/password/set      | {"pwd": "old", "new_pwd": "new"} | |
-| /api/system/phy_fw_ver/get    | none                                                      |                                            |
-| /api/system/reboot            | none                                                      |                                            |
-| /api/system/serial_number/set | serial_number: str                                        |                                            |
-| /api/system/stop_ip/set       | stop_ip: 0/1                     | Careful, when enabled this will disable web interface (can unbreak with serial console cfg reset) |
-| /api/system/sysloop_led/set   | system_loop_led: 0/1                                      |                                            |
-| /api/system/testmode/set      | test_mode: uint                                           |                                            |
-| /api/user/detete              | user: str                                                 |                                            |
-| /api/user/get                 | none                                                      |                                            |
-| /api/user/set                 | add: uint,<br />user: str,<br />pass: str                           |                                            |
-| /api/vlan/create              | vlan: uint                                                |                                            |
-| /api/vlan/delete              | vlan: uint                                                |                                            |
-| /api/vlan/get                 | vlan: uint                                                | parameter is optional                      |
-| /api/vlan/mode/get            | none                                                      |                                            |
-| /api/vlan/mode/set            | mode: uint                                                | 802.1q or port-based?                      |
-| /api/vlan/port/get            | port: uint                                                |                                            |
-| /api/vlan/port/set            | port: uint,<br />accept: uint,<br />pvid: uint                      |                                            |
-| /api/vlan/set                 | vlan: uint,<br />membership: [ {intf: uint, mbr: uint} ]       |                                            |
-| /session_check                | none                                                      |                                            |
+| Path                          | JSON fields in POST body                          | Notes                                   |
+| :---------------------------- | :------------------------------------------------ | :-------------------------------------- |
+| /api/autovoip/oui/create      | oui: "AA:BB:CC"                                   |                                         |
+| /api/autovoip/oui/delete      | oui: "AA:BB:CC"                                   |                                         |
+| /api/autovoip/oui/get         | -                                                 |                                         |
+| /api/autovoip/state/get       | -                                                 |                                         |
+| /api/autovoip/state/set       | gstate: uint                                      |                                         |
+| /api/cfg/default              | -                                                 |                                         |
+| /api/cfg/save                 | -                                                 |                                         |
+| /api/cfg/upload               | http multi-part upload                            |                                         |
+| /api/cfg/validate             | -                                                 |                                         |
+| /api/dev/cfg/view             | query param "download"                            | try a path like /cfg:config.jsn         |
+| /api/dos/get                  | -                                                 |                                         |
+| /api/dos/set                  | macLand: uint,                                    |                                         |
+|                               | ipDaEqSa: uint                                    |                                         |
+|                               | tcpDpEqSp: uint                                   |                                         |
+|                               | udpDpEqSp: uint                                   |                                         |
+|                               | tcpNullScan: uint                                 |                                         |
+|                               | tcpXmasScan: uint                                 |                                         |
+|                               | tcpSynFinScan: uint                               |                                         |
+|                               | tcpSync: uint                                     |                                         |
+|                               | tcpHdrFrag: uint                                  |                                         |
+|                               | ipv4IcmpFrag: uint                                |                                         |
+|                               | ipv6IcmpFrag: uint                                |                                         |
+|                               | icmp4LongPing: uint                               |                                         |
+|                               | icmp6LongPing: uint                               |                                         |
+| /api/fw/data/get              | -                                                 |                                         |
+| /api/fw/image/toggle          | -                                                 |                                         |
+| /api/fw/upload                | http multi-part upload                            |                                         |
+| /api/fw/version/set           | index: int                                        |                                         |
+|                               | verInfo: str                                      |                                         |
+| /api/host/add                 | ipv6: 0                                           | reads like it wouldn't work for ipv6    |
+|                               | ipaddr: "1.2.3.4"                                 |                                         |
+| /api/host/delete              | ipv6: 0                                           | reads like it wouldn't work for ipv6    |
+|                               | ipaddr: "1.2.3.4"                                 |                                         |
+| /api/host/get                 | -                                                 |                                         |
+| /api/host/state/set           | enable: uint                                      |                                         |
+| /api/intf/list/get            | -                                                 |                                         |
+| /api/l2/table/count/get       | -                                                 |                                         |
+| /api/l2/table/get             | start: {mac: vlan: portid:}                       |                                         |
+| /api/lag/create               | descr:                                            | format tbc                              |
+|                               | members:                                          | format tbc                              |
+| /api/lag/delete               | lag: uint                                         |                                         |
+| /api/lag/get                  | lag: uint                                         |                                         |
+| /api/lag/hash/get             | -                                                 |                                         |
+| /api/lag/hash/set             | hash:                                             | format tbc                              |
+| /api/lag/intf/set             | id: uint                                          |                                         |
+|                               | descr:                                            | format tbc                              |
+|                               | members:                                          | format tbc                              |
+| /api/lag/portmap/get          | -                                                 |                                         |
+| /api/lbd/global/get           | -                                                 |                                         |
+| /api/lbd/global/set           | globalEnabled: uint                               |                                         |
+|                               | txTime: uint,                                     |                                         |
+|                               | shutdownTime: uint                                |                                         |
+| /api/lbd/port/get             | -                                                 |                                         |
+| /api/lbd/port/set             | port: uint                                        |                                         |
+|                               | enabled: uint,                                    |                                         |
+|                               | action: uint,                                     |                                         |
+|                               | transmit: uint                                    |                                         |
+| /api/mirror/delete            | -                                                 |                                         |
+| /api/mirror/get               | -                                                 |                                         |
+| /api/mirror/set               | descr:                                            |                                         |
+|                               | destPort:                                         | format tbc                              |
+|                               | egressSrcPorts: []str                             | format tbc                              |
+|                               | ingressSrcPorts: []str                            | format tbc                              |
+|                               | egressSrcVLANs: []str                             | format tbc                              |
+|                               | ingressSrcVLANs: []str                            | format tbc                              |
+| /api/port/admin/get           | port: uint                                        |                                         |
+| /api/port/get                 | port: uint                                        | parameter is optional                   |
+| /api/port/link/state/get      | port: uint                                        |                                         |
+| /api/port/list/get            | -                                                 |                                         |
+| /api/port/phys/type/get       | port: uint                                        |                                         |
+| /api/port/set                 | port: uint                                        |                                         |
+|                               | descr: str                                        |                                         |
+|                               | admin: uint                                       |                                         |
+|                               | autoneg: 0/1 , speed: uint, fdx: uint             | must be set together                    |
+|                               | flow: uint                                        |                                         |
+| /api/port/speed/max/get       | port:uint                                         |                                         |
+| /api/port/stats_err/get       | port:uint                                         |                                         |
+| /api/port/stats_rst/set       | port:uint                                         |                                         |
+| /api/port/stats/clear         | ports: []str                                      | format tbc                              |
+| /api/port/stats/get           | port: uint                                        |                                         |
+| /api/qos/dot1p/mapping/get    | -                                                 |                                         |
+| /api/qos/dot1p/mapping/set    | dot1p: []str                                      | format tbc                              |
+| /api/qos/dscp/mapping/get     | -                                                 |                                         |
+| /api/qos/dscp/mapping/set     | dscp: []str                                       | format tbc                              |
+| /api/qos/port/ratelimit/get   | port: uint                                        |                                         |
+| /api/qos/port/ratelimit/set   | port: uint                                        |                                         |
+|                               | ingress: { admin: uint, rate: uint, unit:"pps" }  | "unit" might have more options, tbc     |
+|                               | egress: { admin: uint, rate: uint, unit:"pps" }   | "unit" might have more options, tbc     |
+| /api/qos/port/sched/get       | port: uint                                        |                                         |
+| /api/qos/port/sched/set       | port: uint, mode: uint, rrWeights:                | format tbc                              |
+| /api/session/login            | user: str, pass: str                              |                                         |
+| /api/session/logout           | -                                                 |                                         |
+| /api/sntp/get                 | -                                                 |                                         |
+| /api/sntp/set                 | state: 0/1, poll: uint, ipv4: "1.2.3.4", tz: uint |                                         |
+| /api/storm/get                | -                                                 |                                         |
+| /api/storm/set                | unicast: {admin: uint}                            |                                         |
+|                               | unicast: {meas:, level: uint}                     | "meas" format is tbc                    |
+|                               | multicast: {admin: uint}                          |                                         |
+|                               | multicast: {meas:, level: uint}                   | "meas" format is tbc                    |
+|                               | broadcast: {admin: uint}                          |                                         |
+|                               | broadcast: {meas:, level: uint}                   | "meas" format is tbc                    |
+| /api/system/led/set           | led_offset: uint                                  |                                         |
+|                               | value: uint                                       |                                         |
+| /api/system/logintime/set     | can_logintime: uint                               | Also sets session timeout to 1d (fixed) |
+| /api/system/loopmode/set      | loopback_mode: 0/1                                | Enables/disables loopback detection     |
+| /api/system/macaddr/set       | mac_addr: "00:11:22:33:44:55"                     |                                         |
+| /api/system/microled/set      | led_mode:uint                                     |                                         |
+| /api/system/params/get        | -                                                 |                                         |
+| /api/system/params/set        | cfg_descr: str(64)                                |                                         |
+|                               | dev_id: str(32)                                   |                                         |
+|                               | dev_name: str(32)                                 |                                         |
+|                               | dev_loc: str(32)                                  |                                         |
+|                               | dev_desc: str(31)                                 |                                         |
+|                               | dhcpv4: 0/1                                       |                                         |
+|                               | ssl: 0/1                                          |                                         |
+|                               | l2Agetime: uint                                   |                                         |
+|                               | sessTTL: uint                                     |                                         |
+|                               | ipv4: "1.2.3.4", subnet:"1.2.3.4", gw: "1.2.3.4"  | Supply together. Applies immediately.   |
+| /api/system/password/set      | {"pwd": "old", "new_pwd": "new"}                  |                                         |
+| /api/system/phy_fw_ver/get    | -                                                 | Returns malformed (unclosed) JSON       |
+| /api/system/reboot            | -                                                 |                                         |
+| /api/system/serial_number/set | serial_number: str                                |                                         |
+| /api/system/stop_ip/set       | stop_ip: 0/1                                      | Stop serving web traffic (!)            |
+| /api/system/sysloop_led/set   | system_loop_led: 0/1                              |                                         |
+| /api/system/testmode/set      | test_mode: uint                                   |                                         |
+| /api/user/detete              | user: str                                         |                                         |
+| /api/user/get                 | -                                                 |                                         |
+| /api/user/set                 | add: uint                                         |                                         |
+|                               | user: str                                         |                                         |
+|                               | pass: str                                         |                                         |
+| /api/vlan/create              | vlan: uint                                        |                                         |
+| /api/vlan/delete              | vlan: uint                                        |                                         |
+| /api/vlan/get                 | vlan: uint                                        | parameter is optional                   |
+| /api/vlan/mode/get            | -                                                 |                                         |
+| /api/vlan/mode/set            | mode: uint                                        | 802.1q or port-based?                   |
+| /api/vlan/port/get            | port: uint                                        |                                         |
+| /api/vlan/port/set            | port: uint                                        |                                         |
+|                               | accept: uint                                      |                                         |
+|                               | pvid: uint                                        |                                         |
+| /api/vlan/set                 | vlan: uint                                        |                                         |
+|                               | membership: [ {intf: uint, mbr: 0/1/2} ]          | mbr 1 = untagged, mbr 2 = tagged        |
+| /session_check                | -                                                 |                                         |
 
 API activity will reset the inactivity window.
 Note that it appears that there can only be one session simultaneously, i.e. when there's an active api session the web login won't work. However, the web user's session id can be shared with api requests.
