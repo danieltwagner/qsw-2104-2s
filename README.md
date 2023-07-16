@@ -12,7 +12,7 @@ Most likely the APIs described below are also available on the QSW-2104-2T, QSW-
 During startup the switch listens for web requests at 1.1.1.100 for 1 minute. If during that time no login happens it will stop listening.
 Once a session has been established there is a 5 minute inactivity window after which the switch stops responding to web requests.
 
-The modified `no_timeout_fw_update.bin` firmware contained within this repository can be uploaded to stop the switch from cutting off web requests after 1 minute.
+The modified `fw-update-qsw-2104-2s-no-timeout.bin` firmware contained within this repository can be uploaded to stop the switch from cutting off web requests after 1 minute.
 
 To update the firmware, set your computer's IP to e.g. 1.1.1.200 and navigate to http://1.1.1.100 once the LEDs signal the switch has finished booting. Then log in with password `Qsw_Update` and proceed to update the modified firmware.
 
