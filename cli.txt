@@ -1,0 +1,1421 @@
+BCM53158 SWITCH firmware Feb 22 2018
+boot_src = M7. Initializing M7
+
+
+Copyright 2015-2017 Broadcom Limited
+         All rights reserved
+
+Unit 0: ChipID: 53161 Rev 17
+Unit 0: Straps: 00005041
+Unit 0: PLL1 CH1 POSTDIV 13
+LED Boot up -> 0s-3s
+Unit 0: LED Refresh cycle config
+Unit 0: LED Delay config
+Unit 0: LED Strap load
+Loading LED Firmware
+.......
+Unit 0: bootloader LED Start
+Buffered Logs:
+OTP_FLAGS = 0x8c
+
+
+Broadcom ROBO OS Bootloader Version 2.4
+
+Bootloader: QSPI flash Model: winbond Size: 128 Mbit
+
+DEVFS: Initializing..
+DEVFS: Device /dev/ttyS0 registered
+DEVFS: Device /dev/flash0 registered
+Press any key to interrupt Auto Boot
+1 0 Autoboot starting...
+Bootloader: Loading image at 1
+Bootloader: Image Version SW-UT2206QG_1.00-0.07
+Watchdog timeout value is 1250000000 (4a817c80)
+
+
+Copyright 2015-2017 Broadcom Limited
+         All rights reserved
+
+ChipId: BCM53161 RevId: 17 
+Version Regs: 
+Software: ROBO_OS_REL_1_4_8 Build: Mon Nov 8 10:15:56 2021
+MPU enabled
+Unit 0: ChipID: 53161 Rev 17
+Unit 0: Straps: 00005041
+Unit 0: PLL1 CH1 POSTDIV 10
+LED Boot up -> 3s-6s
+Unit 0: LED Start
+Buffered Logs:
+OTP_FLAGS = 0x8c
+
+
+Watchdog Setup with timeout 1250000000 (4a817c80)
+Reading Primary Avenger OTP...
+Starting Dynamic AVS Using ROs on Primary Avenger...
+Applying Saved Core Voltage:9833 with saved DAC Code: 637.
+dwl......avs.c:AvsSetDac=637, cur_dac=637 delta=0 
+........avs.c:SetPVTctrl setting AVS_PVT_MNTR_CONFIG_PVT_MNTR_CTRL from 0x80 to 0x180 
+SetAvsVoltage - Final Result: 1
+Core Voltage After applying saved AVS results on Primary Avenger: 9821
+cbxi_slictcam_init()
+QSPI FLASH MPU region re-sized to 16 MB
+sal_fs_init_all:114 File system initialized
+sal_fs_init_all:122 File system obtained from TOC
+sal_fs_init_all:128 File system initialized
+cbxi_lin_init()
+cbxi_encap_init()
+cbx_port_init()
+Unit 0 Mac init Ports: 8 9 10 11 12 13 14 15 
+cbx_lag_init()
+cbx_port_create()
+Unit 0: PBMP_ALL(unit)=ff00
+cbxi_trap_init()
+cbxi_stg_init()
+cbxi_vlan_init()
+cbxi_l2_init()
+cbxi_mcast_init()
+cbx_mirror_init()
+cbx_meter_init()
+cbx_cosq_init()
+cbx_stat_init()
+cbx_cfp_init()
+cbx_auth_init()
+cbx_link_scan_init()
+cbx_link_scan_enable_set()
+cbx_pktio_init()
+LWIP successfully initialized
+LBD enabled 
+QOS disabled 
+port 8, pri=0, dp=0 
+port 9, pri=1, dp=0 
+port 10, pri=2, dp=0 
+port 11, pri=3, dp=0 
+port 12, pri=4, dp=0 
+port 13, pri=5, dp=0 
+extPhyIdentify: fport=8, phyaddr=1. id0=0x1c, id1=0xc848, type=3 ! 
+rtlPhyInit: phyaddr=1 ! 
+phyaddr=1, serdes = 0
+extPhyIdentify: fport=9, phyaddr=2. id0=0x1c, id1=0xc848, type=3 ! 
+rtlPhyInit: phyaddr=2 ! 
+phyaddr=2, serdes = 0
+extPhyIdentify: fport=10, phyaddr=3. id0=0x1c, id1=0xc848, type=3 ! 
+rtlPhyInit: phyaddr=3 ! 
+phyaddr=3, serdes = 0
+extPhyIdentify: fport=11, phyaddr=4. id0=0x1c, id1=0xc848, type=3 ! 
+rtlPhyInit: phyaddr=4 ! 
+phyaddr=4, serdes = 0
+extPhyIdentify: fport=12, phyaddr=5. id0=0xffff, id1=0xffff, type=0 ! 
+extPhyIdentify: fport=13, phyaddr=6. id0=0xffff, id1=0xffff, type=0 ! 
+LED Normal
+Broadcom Cli Starting....
+
+Configuration File Description: '1.4.8.0'
+Setting IP address to : 1.1.1.100
+Setting Network Mask to : 255.255.255.0
+Setting Gateway IP to : 1.1.1.1
+app_user_account_cfg_load:85 Failed to parse userCfg
+app_host_cfg_load:64 Failed to load TRUSTHOST configuration
+app_sntp_cfg_load:98 Failed to load SNTP configuration
+Failed to load Loopback Detection config from 'cfg:/config.jsn'
+
+Loaded default config for Loopback Detection from '/json/config.jsn'
+
+cfg_json_get:426 Invalid parameters
+Starting web server on port :80
+uport = 0, fport=8, flow =0 
+uport = 1, fport=9, flow =0 
+uport = 2, fport=10, flow =0 
+uport = 3, fport=11, flow =0 
+uport = 4, fport=12, flow =0 
+uport = 5, fport=13, flow =0 
+stop ip/arp traffic ! 
+------->rand=0x2b890dc2 , link=1
+lbd=enabled, port 0 link up, wait 3 secs to forward traffic! 
+port set attribute speed , port:8,speed:1000 (last_speed:0)
+lbd=enabled, port 0 , reach 3 secs, now forward traffic! 
+
+BCMCLI> help
+getparam   <name>
+setparam   <name> <value>
+ifconfig
+ls         <dir_name>
+rm         <file_name>
+rmdir      <dir_name>
+cat        <file_name>
+format_cfg
+heap_stats
+lldp       print_mib
+lldp       <all|port_num> <tx|rx> <on|off>
+igmpsnoop  <enable|disable>
+igmpsnoop  stats_get
+igmpsnoop  stats_reset
+stack_stats
+pkt_trace  <tx|rx|all|off>
+cb_counters <unit>
+port_counters <port|cpu>
+<port>
+getreg <register>
+setreg <register> <value>
+hparegdump <unit>
+lwipstats
+port_status <unit>
+rstp forceversion <stp|rstp>
+rstp fwddelay <value>
+rstp maxage <value>
+rstp priority <value>
+rstp admin <port> <enable|disable>
+rstp edge <port> <enable|disable>
+rstp ptpmac <port> <enable|disable>
+rstp mcheck <port> <enable|disable>
+rstp ppriority <port>dump_table <tid> <start> <num entries>
+pkt_send <port> <vlan> <mgid> <tagged> <mode>
+        Mode is Ucast(0x20000) Mcast(0x40000)
+        Tagged = 0 for untagged packet
+wdt test
+fw_toggle
+led_dump
+led_set <offset> <val>
+gpio_read
+led_lb_sys <1/0>
+dump_phy_driver
+phyread <addr> <reg>
+phywrite <addr> <reg> <ext> <value>
+tscread <port> <reg>
+tscwrite <port> <reg> <value>
+phy_debug <0/1>
+int_phy_sp <int> <int>
+cut_thru <0/1>
+egress_rate <fport> <kbps>
+get_websession
+get_system
+fdb
+speed_set <addr> <speed:10G or 5G or 2_5G or 1000F or 100F or 10G/5G/2_5G/1000F/100F>
+speed_get
+mac_agingtime_set <second>
+mac_agingtime_get
+fc_para_get <port>
+fc_para_set <port> <int> <int> <int> <int> <int>
+sfp_get <port>
+loopback_mode <0/1>
+reboot
+
+BCMCLI> speed_get
+Usage: speed_get <port>Command Failed
+
+BCMCLI> speed_get 0
+bcm autonego ability :2.5G 
+bcm link speed:0
+
+BCMCLI> speed_get 1
+rtl autonego ability :2.5G 1000F 
+rtl link speed:1000
+rtl EEE capability, reg:0x7003c,value:0x6:100M 1000M 
+rtl EEE link partner capability, reg:0x7003d,value:0x0:
+
+BCMCLI> speed_get 2
+rtl autonego ability :2.5G 1000F 
+rtl link speed:0
+rtl EEE capability, reg:0x7003c,value:0x6:100M 1000M 
+rtl EEE link partner capability, reg:0x7003d,value:0x0:
+
+BCMCLI> speed_get 3
+rtl autonego ability :2.5G 1000F 
+rtl link speed:0
+rtl EEE capability, reg:0x7003c,value:0x6:100M 1000M 
+rtl EEE link partner capability, reg:0x7003d,value:0x0:
+
+BCMCLI> speed_get 4
+rtl autonego ability :2.5G 1000F 
+rtl link speed:0
+rtl EEE capability, reg:0x7003c,value:0x6:100M 1000M 
+rtl EEE link partner capability, reg:0x7003d,value:0x0:
+
+BCMCLI> speed_get 5
+bcm autonego ability :10G 5G 2.5G 1000F 1000H 100F 100H 
+bcm link speed:10
+bcm EEE capability, reg:0x7003c,value:0xffff :100M 1000M 10G 
+bcm EEE link partner capability, reg:0x7003d,value:0xffff : 100M 1000M 10G 
+
+BCMCLI> speed_get 6
+bcm autonego ability :10G 5G 2.5G 1000F 1000H 100F 100H 
+bcm link speed:10
+bcm EEE capability, reg:0x7003c,value:0xffff :100M 1000M 10G 
+bcm EEE link partner capability, reg:0x7003d,value:0xffff : 100M 1000M 10G 
+
+BCMCLI> speed_get 7
+bcm autonego ability :10G 5G 2.5G 1000F 1000H 100F 100H 
+bcm link speed:10
+bcm EEE capability, reg:0x7003c,value:0xffff :100M 1000M 10G 
+bcm EEE link partner capability, reg:0x7003d,value:0xffff : 100M 1000M 10G 
+
+BCMCLI> speed_get 8
+bcm autonego ability :10G 5G 2.5G 1000F 1000H 100F 100H 
+bcm link speed:10
+bcm EEE capability, reg:0x7003c,value:0xffff :100M 1000M 10G 
+bcm EEE link partner capability, reg:0x7003d,value:0xffff : 100M 1000M 10G 
+
+BCMCLI> speed_get 9
+bcm autonego ability :10G 5G 2.5G 1000F 1000H 100F 100H 
+bcm link speed:10
+bcm EEE capability, reg:0x7003c,value:0xffff :100M 1000M 10G 
+bcm EEE link partner capability, reg:0x7003d,value:0xffff : 100M 1000M 10G 
+
+BCMCLI> get_websession
+
+BCMCLI> sfp_get 1
+get port: 1, mux=I2C_SDA12, rc=-1 data------------------------------
+0xf1,0xd5,0x0c,0x10,0x50,0x93,0x80,0x20,
+0x50,0x93,0x80,0x20,0x04,0x16,0x82,0x20,
+
+BCMCLI> sfp_get 5
+get port: 5, mux=I2C_SDA12, rc=-1 data------------------------------
+0xf1,0xd5,0x0c,0x10,0x50,0x93,0x80,0x20,
+0x34,0x00,0x00,0x00,0x66,0x00,0x00,0x00,
+
+BCMCLI> port_status
+Command Failed
+
+BCMCLI> port_status 0
+PortMacro Status: 0
++----------------------------------------------------------------+
+| Port |  MacSpeed |  PhySpeed | Link | MacLb | PhyLB | EXT-LINK |
++----------------------------------------------------------------+
+|    8 |    1000   |    1000   | UP   |  NO   |  NO  |  UP   |
+|    9 |    2500   |    1000   | DOWN |  NO   |  NO  |  DOWN |
+|   10 |    2500   |    1000   | DOWN |  NO   |  NO  |  DOWN |
+|   11 |    2500   |    1000   | DOWN |  NO   |  NO  |  DOWN |
+|   12 |    2500   |    2500   | DOWN |  NO   |  NO  |  DOWN |
+|   13 |    2500   |    2500   | DOWN |  NO   |  NO  |  DOWN |
+|   14 |    1000   |       0   | DOWN |  NO   |  NO  |  UP   |
+|   15 |    1000   |       0   | DOWN |  NO   |  NO  |  UP   |
++----------------------------------------------------------------+
+
+BCMCLI> sfp_get 8
+get port: 8, mux=I2C_SDA12, rc=-1 data------------------------------
+0xf1,0xd5,0x0c,0x10,0x50,0x93,0x80,0x20,
+0x00,0x00,0x00,0x00,0x7d,0xa5,0x16,0x10,
+
+BCMCLI> sfp_get 9
+get port: 9, mux=I2C_SDA12, rc=-1 data------------------------------
+0xf1,0xd5,0x0c,0x10,0x50,0x93,0x80,0x20,
+0x00,0x00,0x00,0x00,0x7d,0xa5,0x16,0x10,
+
+BCMCLI> sfp_get 10
+get port: 10, mux=I2C_SDA12, rc=-1 data------------------------------
+0xf1,0xd5,0x0c,0x10,0x50,0x93,0x80,0x20,
+0x00,0x00,0x00,0x00,0x7d,0xa5,0x16,0x10,
+
+
+BCMCLI> sfp_get 14
+get port: 14, mux=I2C_SDA12, rc=-1 data------------------------------
+0xf1,0xd5,0x0c,0x10,0x50,0x93,0x80,0x20,
+0x01,0x00,0x00,0x00,0x50,0x95,0x80,0x20,
+BCMCLI> speed_get
+Usage: speed_get <port>Command Failed
+
+BCMCLI> speed_get 98
+WARNING: truncated malformed integer "98"
+bcm autonego ability :10G 5G 2.5G 1000F 1000H 100F 100H 
+bcm link speed:10
+bcm EEE capability, reg:0x7003c,value:0xffff :100M 1000M 10G 
+bcm EEE link partner capability, reg:0x7003d,value:0xffff : 100M 1000M 10G 
+
+BCMCLI> speed_get 8
+bcm autonego ability :10G 5G 2.5G 1000F 1000H 100F 100H 
+bcm link speed:10
+bcm EEE capability, reg:0x7003c,value:0xffff :100M 1000M 10G 
+bcm EEE link partner capability, reg:0x7003d,value:0xffff : 100M 1000M 10G 
+
+BCMCLI> speed_get 9
+bcm autonego ability :10G 5G 2.5G 1000F 1000H 100F 100H 
+bcm link speed:10
+bcm EEE capability, reg:0x7003c,value:0xffff :100M 1000M 10G 
+bcm EEE link partner capability, reg:0x7003d,value:0xffff : 100M 1000M 10G 
+
+BCMCLI> speed_get 10
+bcm autonego ability :10G 5G 2.5G 1000F 1000H 100F 100H 
+bcm link speed:10
+bcm EEE capability, reg:0x7003c,value:0xffff :100M 1000M 10G 
+bcm EEE link partner capability, reg:0x7003d,value:0xffff : 100M 1000M 10G 
+
+BCMCLI> speed_get 14
+bcm autonego ability :10G 5G 2.5G 1000F 1000H 100F 100H 
+bcm link speed:10
+bcm EEE capability, reg:0x7003c,value:0xffff :100M 1000M 10G 
+bcm EEE link partner capability, reg:0x7003d,value:0xffff : 100M 1000M 10G 
+
+BCMCLI> fc_para_get 8
+get port: 8
+thresh0: 69
+thresh1: 167
+thresh2: 167
+thresh3: 167
+hysteresis: 39
+ac_policy: 2
+
+BCMCLI> fc_para_get 9
+get port: 9
+thresh0: 69
+thresh1: 167
+thresh2: 167
+thresh3: 167
+hysteresis: 39
+ac_policy: 2
+
+BCMCLI> fc_para_get 14
+get port: 14
+thresh0: 69
+thresh1: 167
+thresh2: 167
+thresh3: 167
+hysteresis: 39
+ac_policy: 2
+
+BCMCLI> lwipstats
+
+LINK
+        xmit: 0
+        recv: 0
+        fw: 0
+        drop: 0
+        chkerr: 0
+        lenerr: 0
+        memerr: 0
+        rterr: 0
+        proterr: 0
+        opterr: 0
+        err: 0
+        cachehit: 0
+
+ETHARP
+        xmit: 1
+        recv: 0
+        fw: 0
+        drop: 0
+        chkerr: 0
+        lenerr: 0
+        memerr: 0
+        rterr: 0
+        proterr: 0
+        opterr: 0
+        err: 0
+        cachehit: 0
+
+IP_FRAG
+        xmit: 0
+        recv: 0
+        fw: 0
+        drop: 0
+        chkerr: 0
+        lenerr: 0
+        memerr: 0
+        rterr: 0
+        proterr: 0
+        opterr: 0
+        err: 0
+        cachehit: 0
+
+IP
+        xmit: 0
+        recv: 0
+        fw: 0
+        drop: 0
+        chkerr: 0
+        lenerr: 0
+        memerr: 0
+        rterr: 0
+        proterr: 0
+        opterr: 0
+        err: 0
+        cachehit: 0
+
+ICMP
+        xmit: 0
+        recv: 0
+        fw: 0
+        drop: 0
+        chkerr: 0
+        lenerr: 0
+        memerr: 0
+        rterr: 0
+        proterr: 0
+        opterr: 0
+        err: 0
+        cachehit: 0
+
+UDP
+        xmit: 0
+        recv: 0
+        fw: 0
+        drop: 0
+        chkerr: 0
+        lenerr: 0
+        memerr: 0
+        rterr: 0
+        proterr: 0
+        opterr: 0
+        err: 0
+        cachehit: 0
+
+TCP
+        xmit: 0
+        recv: 0
+        fw: 0
+        drop: 0
+        chkerr: 0
+        lenerr: 0
+        memerr: 0
+        rterr: 0
+        proterr: 0
+        opterr: 0
+        err: 0
+        cachehit: 0
+
+MEM HEAP
+        avail: 5120
+        used: 0
+        max: 68
+        err: 0
+
+MEM RAW_PCB
+        avail: 4
+        used: 0
+        max: 0
+        err: 0
+
+MEM UDP_PCB
+        avail: 4
+        used: 0
+        max: 0
+        err: 0
+
+MEM TCP_PCB
+        avail: 10
+        used: 0
+        max: 1
+        err: 0
+
+MEM TCP_PCB_LISTEN
+        avail: 8
+        used: 1
+        max: 1
+        err: 0
+
+MEM TCP_SEG
+        avail: 16
+        used: 0
+        max: 0
+        err: 0
+
+MEM REASSDATA
+        avail: 5
+        used: 0
+        max: 0
+        err: 0
+
+MEM FRAG_PBUF
+        avail: 15
+        used: 0
+        max: 0
+        err: 0
+
+MEM NETBUF
+        avail: 2
+        used: 0
+        max: 0
+        err: 0
+
+MEM NETCONN
+        avail: 14
+        used: 1
+        max: 1
+        err: 0
+
+MEM TCPIP_MSG_API
+        avail: 8
+        used: 0
+        max: 0
+        err: 0
+
+MEM TCPIP_MSG_INPKT
+        avail: 8
+        used: 0
+        max: 0
+        err: 0
+
+MEM SYS_TIMEOUT
+        avail: 6
+        used: 5
+        max: 5
+        err: 0
+
+MEM NETDB
+        avail: 1
+        used: 0
+        max: 0
+        err: 0
+
+MEM PBUF_REF/ROM
+        avail: 16
+        used: 0
+        max: 0
+        err: 0
+
+MEM PBUF_POOL
+        avail: 26
+        used: 0
+        max: 0
+        err: 0
+
+SYS
+        sem.used:  2
+        sem.max:   2
+        sem.err:   0
+        mutex.used: 2
+        mutex.max:  2
+        mutex.err:  0
+        mbox.used:  2
+        mbox.max:   2
+        mbox.err:   0
+        
+BCMCLI> ifconfig
+IP Addr      : 1.1.1.100
+Network Mask : 255.255.255.0
+Gateway IP   : 1.1.1.1
+
+BCMCLI> ifconfig --help
+IP Addr      : 1.1.1.100
+Network Mask : 255.255.255.0
+Gateway IP   : 1.1.1.1
+
+BCMCLI> ifconfig 192.168.130.40
+IP Addr      : 1.1.1.100
+Network Mask : 255.255.255.0
+Gateway IP   : 1.1.1.1
+
+BCMCLI> format_cfg
+
+BCMCLI> ls
+Usage: ls         <dir_name>
+Command Failed
+
+BCMCLI> ls .
+EDI_WEB/         2021-11-08 00:00:00     0000000000 bytes
+JSON/    2021-11-08 00:00:00     0000000000 bytes
+CERTS/   2021-11-08 00:00:00     0000000000 bytes
+
+BCMCLI> ls /
+EDI_WEB/         2021-11-08 00:00:00     0000000000 bytes
+JSON/    2021-11-08 00:00:00     0000000000 bytes
+CERTS/   2021-11-08 00:00:00     0000000000 bytes
+
+BCMCLI> ls edi_web
+IMAGES/          2021-11-08 00:00:00     0000000000 bytes
+LOGIN.HTM        2021-11-08 00:00:00     0000003401 bytes
+INDEX.HTM        2021-11-08 00:00:00     0000003358 bytes
+CSS/     2021-11-08 00:00:00     0000000000 bytes
+JS/      2021-11-08 00:00:00     0000000000 bytes
+ISS/     2021-11-08 00:00:00     0000000000 bytes
+MERGE_~1.SH      2021-11-08 00:00:00     0000000184 bytes
+
+BCMCLI> cat logiedi_web
+Error opening file for reading : logiedi_web
+Command Failed
+
+BCMCLI> cat edi_web
+Error opening file for reading : edi_web
+Command Failed
+
+BCMCLI> cat edi/_web/merge_~1.sh
+Error opening file for reading : edi/_web/merge_~1.sh
+Command Failed
+
+BCMCLI> cat /edi_web/merge_~1.sh
+#!/bin/bash
+
+cat js/common.js js/form_com.js js/json_com.js js/jq_diag.js js/err_str.js > js/edimax.js
+cat css/style.css css/scrobar.css css/frame.css css/jq_diag.css > css/edimax.css
+
+BCM53158 SWITCH firmware Feb 22 2018
+boot_src = M7. Initializing M7
+
+
+Copyright 2015-2017 Broadcom Limited
+         All rights reserved
+
+Unit 0: ChipID: 53161 Rev 17
+Unit 0: Straps: 00005041
+Unit 0: PLL1 CH1 POSTDIV 13
+LED Boot up -> 0s-3s
+Unit 0: LED Refresh cycle config
+Unit 0: LED Delay config
+Unit 0: LED Strap load
+Loading LED Firmware
+.......
+Unit 0: bootloader LED Start
+Buffered Logs:
+OTP_FLAGS = 0x8c
+
+
+Broadcom ROBO OS Bootloader Version 2.4
+
+Bootloader: QSPI flash Model: winbond Size: 128 Mbit
+
+DEVFS: Initializing..
+DEVFS: Device /dev/ttyS0 registered
+DEVFS: Device /dev/flash0 registered
+Press any key to interrupt Auto Boot
+1 0 Autoboot starting...
+Bootloader: Loading image at 1
+Bootloader: Image Version SW-UT2206QG_1.00-0.07
+Watchdog timeout value is 1250000000 (4a817c80)
+
+
+Copyright 2015-2017 Broadcom Limited
+         All rights reserved
+
+ChipId: BCM53161 RevId: 17 
+Version Regs: 
+Software: ROBO_OS_REL_1_4_8 Build: Mon Nov 8 10:15:56 2021
+MPU enabled
+Unit 0: ChipID: 53161 Rev 17
+Unit 0: Straps: 00005041
+Unit 0: PLL1 CH1 POSTDIV 10
+LED Boot up -> 3s-6s
+Unit 0: LED Start
+Buffered Logs:
+OTP_FLAGS = 0x8c
+
+
+Watchdog Setup with timeout 1250000000 (4a817c80)
+Reading Primary Avenger OTP...
+Starting Dynamic AVS Using ROs on Primary Avenger...
+Applying Saved Core Voltage:9833 with saved DAC Code: 637.
+dwl......avs.c:AvsSetDac=637, cur_dac=637 delta=0 
+........avs.c:SetPVTctrl setting AVS_PVT_MNTR_CONFIG_PVT_MNTR_CTRL from 0x80 to 0x180 
+SetAvsVoltage - Final Result: 1
+Core Voltage After applying saved AVS results on Primary Avenger: 9821
+cbxi_slictcam_init()
+QSPI FLASH MPU region re-sized to 16 MB
+sal_fs_init_all:114 File system initialized
+sal_fs_init_all:122 File system obtained from TOC
+sal_fs_init_all:128 File system initialized
+cbxi_lin_init()
+cbxi_encap_init()
+cbx_port_init()
+Unit 0 Mac init Ports: 8 9 10 11 12 13 14 15 
+cbx_lag_init()
+cbx_port_create()
+Unit 0: PBMP_ALL(unit)=ff00
+cbxi_trap_init()
+cbxi_stg_init()
+cbxi_vlan_init()
+cbxi_l2_init()
+cbxi_mcast_init()
+cbx_mirror_init()
+cbx_meter_init()
+cbx_cosq_init()
+cbx_stat_init()
+cbx_cfp_init()
+cbx_auth_init()
+cbx_link_scan_init()
+cbx_link_scan_enable_set()
+cbx_pktio_init()
+LWIP successfully initialized
+LBD enabled 
+QOS disabled 
+port 8, pri=0, dp=0 
+port 9, pri=1, dp=0 
+port 10, pri=2, dp=0 
+port 11, pri=3, dp=0 
+port 12, pri=4, dp=0 
+port 13, pri=5, dp=0 
+extPhyIdentify: fport=8, phyaddr=1. id0=0x1c, id1=0xc848, type=3 ! 
+rtlPhyInit: phyaddr=1 ! 
+phyaddr=1, serdes = 0
+extPhyIdentify: fport=9, phyaddr=2. id0=0x1c, id1=0xc848, type=3 ! 
+rtlPhyInit: phyaddr=2 ! 
+phyaddr=2, serdes = 0
+extPhyIdentify: fport=10, phyaddr=3. id0=0x1c, id1=0xc848, type=3 ! 
+rtlPhyInit: phyaddr=3 ! 
+phyaddr=3, serdes = 0
+extPhyIdentify: fport=11, phyaddr=4. id0=0x1c, id1=0xc848, type=3 ! 
+rtlPhyInit: phyaddr=4 ! 
+phyaddr=4, serdes = 0
+extPhyIdentify: fport=12, phyaddr=5. id0=0xffff, id1=0xffff, type=0 ! 
+extPhyIdentify: fport=13, phyaddr=6. id0=0xffff, id1=0xffff, type=0 ! 
+LED Normal
+Broadcom Cli Starting....
+
+BCMCLI> cfg_load:533 Loading default configuration from '/json/config.jsn'
+Setting IP address to : 1.1.1.100
+Setting Network Mask to : 255.255.255.0
+Setting Gateway IP to : 1.1.1.1
+app_user_account_cfg_load:85 Failed to parse userCfg
+app_host_cfg_load:64 Failed to load TRUSTHOST configuration
+app_sntp_cfg_load:98 Failed to load SNTP configuration
+Failed to load Loopback Detection config from 'cfg:/config.jsn'
+
+Loaded default config for Loopback Detection from '/json/config.jsn'
+
+cfg_json_get:426 Invalid parameters
+Starting web server on port :80
+uport = 0, fport=8, flow =0 
+uport = 1, fport=9, flow =0 
+uport = 2, fport=10, flow =0 
+uport = 3, fport=11, flow =0 
+uport = 4, fport=12, flow =0 
+uport = 5, fport=13, flow =0 
+------->rand=0x10993dc2 , link=1
+lbd=enabled, port 1 link up, wait 3 secs to forward traffic! 
+port set attribute speed , port:9,speed:2500 (last_speed:0)
+uport = 1, fport=9, flow =1 
+lbd=enabled, port 1 , reach 3 secs, now forward traffic! 
+ifconfig
+IP Addr      : 1.1.1.100
+Network Mask : 255.255.255.0
+Gateway IP   : 1.1.1.1
+
+BCMCLI> ls
+Usage: ls         <dir_name>
+Command Failed
+
+BCMCLI> 
+
+BCMCLI> ls /
+EDI_WEB/         2021-11-08 00:00:00     0000000000 bytes
+JSON/    2021-11-08 00:00:00     0000000000 bytes
+CERTS/   2021-11-08 00:00:00     0000000000 bytes
+
+BCMCLI> 
+
+BCMCLI> ls json/
+Command Failed
+
+BCMCLI> 
+
+BCMCLI> ls /json
+CONFIG.JSN       2021-11-08 00:00:00     0000004389 bytes
+README.TXT       2021-11-08 00:00:00     0000000028 bytes
+
+BCMCLI> 
+
+BCMCLI> ls 
+Usage: ls         <dir_name>
+Command Failed
+
+BCMCLI> stop ip/arp traffic ! 
+
+reboot␃␄
+
+
+
+BCM53158 SWITCH firmware Feb 22 2018
+boot_src = M7. Initializing M7
+
+
+Copyright 2015-2017 Broadcom Limited
+         All rights reserved
+
+Unit 0: ChipID: 53161 Rev 17
+Unit 0: Straps: 00005041
+Unit 0: PLL1 CH1 POSTDIV 13
+LED Boot up -> 0s-3s
+Unit 0: LED Refresh cycle config
+Unit 0: LED Delay config
+Unit 0: LED Strap load
+Loading LED Firmware
+.......
+Unit 0: bootloader LED Start
+Buffered Logs:
+OTP_FLAGS = 0x8c
+
+
+Broadcom ROBO OS Bootloader Version 2.4
+
+Bootloader: QSPI flash Model: winbond Size: 128 Mbit
+
+DEVFS: Initializing..
+DEVFS: Device /dev/ttyS0 registered
+DEVFS: Device /dev/flash0 registered
+Press any key to interrupt Auto Boot
+1 0 Autoboot starting...
+Bootloader: Loading image at 1
+Bootloader: Image Version SW-UT2206QG_1.00-0.07
+Watchdog timeout value is 1250000000 (4a817c80)
+
+
+Copyright 2015-2017 Broadcom Limited
+         All rights reserved
+
+ChipId: BCM53161 RevId: 17 
+Version Regs: 
+Software: ROBO_OS_REL_1_4_8 Build: Mon Nov 8 10:15:56 2021
+MPU enabled
+Unit 0: ChipID: 53161 Rev 17
+Unit 0: Straps: 00005041
+Unit 0: PLL1 CH1 POSTDIV 10
+LED Boot up -> 3s-6s
+Unit 0: LED Start
+Buffered Logs:
+OTP_FLAGS = 0x8c
+
+
+Watchdog Setup with timeout 1250000000 (4a817c80)
+Reading Primary Avenger OTP...
+Starting Dynamic AVS Using ROs on Primary Avenger...
+Applying Saved Core Voltage:9833 with saved DAC Code: 637.
+dwl......avs.c:AvsSetDac=637, cur_dac=637 delta=0 
+........avs.c:SetPVTctrl setting AVS_PVT_MNTR_CONFIG_PVT_MNTR_CTRL from 0x80 to 0x180 
+SetAvsVoltage - Final Result: 1
+Core Voltage After applying saved AVS results on Primary Avenger: 9816
+cbxi_slictcam_init()
+QSPI FLASH MPU region re-sized to 16 MB
+sal_fs_init_all:114 File system initialized
+sal_fs_init_all:122 File system obtained from TOC
+sal_fs_init_all:128 File system initialized
+cbxi_lin_init()
+cbxi_encap_init()
+cbx_port_init()
+Unit 0 Mac init Ports: 8 9 10 11 12 13 14 15 
+cbx_lag_init()
+cbx_port_create()
+Unit 0: PBMP_ALL(unit)=ff00
+cbxi_trap_init()
+cbxi_stg_init()
+cbxi_vlan_init()
+cbxi_l2_init()
+cbxi_mcast_init()
+cbx_mirror_init()
+cbx_meter_init()
+cbx_cosq_init()
+cbx_stat_init()
+cbx_cfp_init()
+cbx_auth_init()
+cbx_link_scan_init()
+cbx_link_scan_enable_set()
+cbx_pktio_init()
+LWIP successfully initialized
+LBD enabled 
+QOS disabled 
+port 8, pri=0, dp=0 
+port 9, pri=1, dp=0 
+port 10, pri=2, dp=0 
+port 11, pri=3, dp=0 
+port 12, pri=4, dp=0 
+port 13, pri=5, dp=0 
+extPhyIdentify: fport=8, phyaddr=1. id0=0x1c, id1=0xc848, type=3 ! 
+rtlPhyInit: phyaddr=1 ! 
+phyaddr=1, serdes = 0
+extPhyIdentify: fport=9, phyaddr=2. id0=0x1c, id1=0xc848, type=3 ! 
+rtlPhyInit: phyaddr=2 ! 
+phyaddr=2, serdes = 0
+extPhyIdentify: fport=10, phyaddr=3. id0=0x1c, id1=0xc848, type=3 ! 
+rtlPhyInit: phyaddr=3 ! 
+phyaddr=3, serdes = 0
+extPhyIdentify: fport=11, phyaddr=4. id0=0x1c, id1=0xc848, type=3 ! 
+rtlPhyInit: phyaddr=4 ! 
+phyaddr=4, serdes = 0
+extPhyIdentify: fport=12, phyaddr=5. id0=0xffff, id1=0xffff, type=0 ! 
+extPhyIdentify: fport=13, phyaddr=6. id0=0xffff, id1=0xffff, type=0 ! 
+LED Normal
+Broadcom Cli Starting....
+
+BCMCLI> cfg_load:533 Loading default configuration from '/json/config.jsn'
+Setting IP address to : 1.1.1.100
+Setting Network Mask to : 255.255.255.0
+Setting Gateway IP to : 1.1.1.1
+app_user_account_cfg_load:85 Failed to parse userCfg
+app_host_cfg_load:64 Failed to load TRUSTHOST configuration
+app_sntp_cfg_load:98 Failed to load SNTP configuration
+Failed to load Loopback Detection config from 'cfg:/config.jsn'
+
+Loaded default config for Loopback Detection from '/json/config.jsn'
+
+cfg_json_get:426 Invalid parameters
+Starting web server on port :80
+uport = 0, fport=8, flow =0 
+uport = 1, fport=9, flow =0 
+uport = 2, fport=10, flow =0 
+uport = 3, fport=11, flow =0 
+uport = 4, fport=12, flow =0 
+uport = 5, fport=13, flow =0 
+------->rand=0xbf7dd5c2 , link=1
+lbd=enabled, port 1 link up, wait 3 secs to forward traffic! 
+port set attribute speed , port:9,speed:2500 (last_speed:0)
+uport = 1, fport=9, flow =1 
+lbd=enabled, port 1 , reach 3 secs, now forward traffic! 
+can_login_sec=50, current_s_count=0
+can_login_sec=38, current_s_count=0
+can_login_sec=30, current_s_count=0
+stop ip/arp traffic ! 
+list
+Unknown Command list
+
+
+BCMCLI> help
+getparam   <name>
+setparam   <name> <value>
+ifconfig
+ls         <dir_name>
+rm         <file_name>
+rmdir      <dir_name>
+cat        <file_name>
+format_cfg
+heap_stats
+lldp       print_mib
+lldp       <all|port_num> <tx|rx> <on|off>
+igmpsnoop  <enable|disable>
+igmpsnoop  stats_get
+igmpsnoop  stats_reset
+stack_stats
+pkt_trace  <tx|rx|all|off>
+cb_counters <unit>
+port_counters <port|cpu>
+<port>
+getreg <register>
+setreg <register> <value>
+hparegdump <unit>
+lwipstats
+port_status <unit>
+rstp forceversion <stp|rstp>
+rstp fwddelay <value>
+rstp maxage <value>
+rstp priority <value>
+rstp admin <port> <enable|disable>
+rstp edge <port> <enable|disable>
+rstp ptpmac <port> <enable|disable>
+rstp mcheck <port> <enable|disable>
+rstp ppriority <port>dump_table <tid> <start> <num entries>
+pkt_send <port> <vlan> <mgid> <tagged> <mode>
+        Mode is Ucast(0x20000) Mcast(0x40000)
+        Tagged = 0 for untagged packet
+wdt test
+fw_toggle
+led_dump
+led_set <offset> <val>
+gpio_read
+led_lb_sys <1/0>
+dump_phy_driver
+phyread <addr> <reg>
+phywrite <addr> <reg> <ext> <value>
+tscread <port> <reg>
+tscwrite <port> <reg> <value>
+phy_debug <0/1>
+int_phy_sp <int> <int>
+cut_thru <0/1>
+egress_rate <fport> <kbps>
+get_websession
+get_system
+fdb
+speed_set <addr> <speed:10G or 5G or 2_5G or 1000F or 100F or 10G/5G/2_5G/1000F/100F>
+speed_get
+mac_agingtime_set <second>
+mac_agingtime_get
+fc_para_get <port>
+fc_para_set <port> <int> <int> <int> <int> <int>
+sfp_get <port>
+loopback_mode <0/1>
+reboot
+
+BCMCLI> 
+
+BCMCLI> reboot
+�
+
+
+
+BCM53158 SWITCH firmware Feb 22 2018
+boot_src = M7. Initializing M7
+
+
+Copyright 2015-2017 Broadcom Limited
+         All rights reserved
+
+Unit 0: ChipID: 53161 Rev 17
+Unit 0: Straps: 00005041
+Unit 0: PLL1 CH1 POSTDIV 13
+LED Boot up -> 0s-3s
+Unit 0: LED Refresh cycle config
+Unit 0: LED Delay config
+Unit 0: LED Strap load
+Loading LED Firmware
+.......
+Unit 0: bootloader LED Start
+Buffered Logs:
+OTP_FLAGS = 0x8c
+
+
+Broadcom ROBO OS Bootloader Version 2.4
+
+Bootloader: QSPI flash Model: winbond Size: 128 Mbit
+
+DEVFS: Initializing..
+DEVFS: Device /dev/ttyS0 registered
+DEVFS: Device /dev/flash0 registered
+Press any key to interrupt Auto Boot
+1 Bootloader: Auto boot Interrupted, Launching Cli
+Broadcom Cli Starting....
+
+BCMCLI> 
+
+BCMCLI> 
+
+BCMCLI> help
+config_get [<param>] (get all or given config)
+config_set <param> <value> (set given config)
+list (List all images)
+getreg <register>
+reboot (Reboot the system)
+rz (receive a file via zmodem)
+setreg <register> <value>
+save (save boot config)
+
+BCMCLI> 
+
+BCMCLI> list
++-----------------------------------------------------------------+
+| Image | Offset   | Len      |       Version                     |
++-----------------------------------------------------------------+
+|  1    | 10060000 | 3092020 | SW-UT2206QG_1.00-0.07 |
+|  2    | 103a0000 | 3092020 | SW-UT2206QG_1.00-0.07  |
++-----------------------------------------------------------------+
+
+BCMCLI> 
+
+BCMCLI> reboot�
+
+
+
+BCM53158 SWITCH firmware Feb 22 2018
+boot_src = M7. Initializing M7
+
+
+Copyright 2015-2017 Broadcom Limited
+         All rights reserved
+
+Unit 0: ChipID: 53161 Rev 17
+Unit 0: Straps: 00005041
+Unit 0: PLL1 CH1 POSTDIV 13
+LED Boot up -> 0s-3s
+Unit 0: LED Refresh cycle config
+Unit 0: LED Delay config
+Unit 0: LED Strap load
+Loading LED Firmware
+.......
+Unit 0: bootloader LED Start
+Buffered Logs:
+OTP_FLAGS = 0x8c
+
+
+Broadcom ROBO OS Bootloader Version 2.4
+
+Bootloader: QSPI flash Model: winbond Size: 128 Mbit
+
+DEVFS: Initializing..
+DEVFS: Device /dev/ttyS0 registered
+DEVFS: Device /dev/flash0 registered
+Press any key to interrupt Auto Boot
+1 0 Autoboot starting...
+Bootloader: Loading image at 1
+Bootloader: Image Version SW-UT2206QG_1.00-0.07
+Watchdog timeout value is 1250000000 (4a817c80)
+
+
+Copyright 2015-2017 Broadcom Limited
+         All rights reserved
+
+ChipId: BCM53161 RevId: 17 
+Version Regs: 
+Software: ROBO_OS_REL_1_4_8 Build: Mon Nov 8 10:15:56 2021
+MPU enabled
+Unit 0: ChipID: 53161 Rev 17
+Unit 0: Straps: 00005041
+Unit 0: PLL1 CH1 POSTDIV 10
+LED Boot up -> 3s-6s
+Unit 0: LED Start
+Buffered Logs:
+OTP_FLAGS = 0x8c
+
+
+Watchdog Setup with timeout 1250000000 (4a817c80)
+Reading Primary Avenger OTP...
+Starting Dynamic AVS Using ROs on Primary Avenger...
+Applying Saved Core Voltage:9833 with saved DAC Code: 637.
+dwl......avs.c:AvsSetDac=637, cur_dac=637 delta=0 
+........avs.c:SetPVTctrl setting AVS_PVT_MNTR_CONFIG_PVT_MNTR_CTRL from 0x80 to 0x180 
+SetAvsVoltage - Final Result: 1
+Core Voltage After applying saved AVS results on Primary Avenger: 9813
+cbxi_slictcam_init()
+QSPI FLASH MPU region re-sized to 16 MB
+sal_fs_init_all:114 File system initialized
+sal_fs_init_all:122 File system obtained from TOC
+sal_fs_init_all:128 File system initialized
+cbxi_lin_init()
+cbxi_encap_init()
+cbx_port_init()
+Unit 0 Mac init Ports: 8 9 10 11 12 13 14 15 
+cbx_lag_init()
+cbx_port_create()
+Unit 0: PBMP_ALL(unit)=ff00
+cbxi_trap_init()
+cbxi_stg_init()
+cbxi_vlan_init()
+cbxi_l2_init()
+cbxi_mcast_init()
+cbx_mirror_init()
+cbx_meter_init()
+cbx_cosq_init()
+cbx_stat_init()
+cbx_cfp_init()
+cbx_auth_init()
+cbx_link_scan_init()
+cbx_link_scan_enable_set()
+cbx_pktio_init()
+LWIP successfully initialized
+LBD enabled 
+QOS disabled 
+port 8, pri=0, dp=0 
+port 9, pri=1, dp=0 
+port 10, pri=2, dp=0 
+port 11, pri=3, dp=0 
+port 12, pri=4, dp=0 
+port 13, pri=5, dp=0 
+extPhyIdentify: fport=8, phyaddr=1. id0=0x1c, id1=0xc848, type=3 ! 
+rtlPhyInit: phyaddr=1 ! 
+phyaddr=1, serdes = 0
+extPhyIdentify: fport=9, phyaddr=2. id0=0x1c, id1=0xc848, type=3 ! 
+rtlPhyInit: phyaddr=2 ! 
+phyaddr=2, serdes = 0
+extPhyIdentify: fport=10, phyaddr=3. id0=0x1c, id1=0xc848, type=3 ! 
+rtlPhyInit: phyaddr=3 ! 
+phyaddr=3, serdes = 0
+extPhyIdentify: fport=11, phyaddr=4. id0=0x1c, id1=0xc848, type=3 ! 
+rtlPhyInit: phyaddr=4 ! 
+phyaddr=4, serdes = 0
+extPhyIdentify: fport=12, phyaddr=5. id0=0xffff, id1=0xffff, type=0 ! 
+extPhyIdentify: fport=13, phyaddr=6. id0=0xffff, id1=0xffff, type=0 ! 
+LED Normal
+Broadcom Cli Starting....
+
+BCMCLI> cffg_load:533 Loading default configuration from '/json/config.jsn'
+Setting IP address to : 1.1.1.100
+Setting Network Mask to : 255.255.255.0
+Setting Gateway IP to : 1.1.1.1
+app_user_account_cfg_load:85 Failed to parse userCfg
+app_host_cfg_load:64 Failed to load TRUSTHOST configuration
+app_sntp_cfg_load:98 Failed to load SNTP configuration
+Failed to load Loopback Detection config from 'cfg:/config.jsn'
+
+Loaded default config for Loopback Detection from '/json/config.jsn'
+
+cfg_json_get:426 Invalid parameters
+Starting web server on port :80
+uport = 0, fport=8, flow =0 
+uport = 1, fport=9, flow =0 
+uport = 2, fport=10, flow =0 
+uport = 3, fport=11, flow =0 
+uport = 4, fport=12, flow =0 
+uport = 5, fport=13, flow =0 
+------->rand=0x878b09c2 , link=1
+lbd=enabled, port 1 link up, wait 3 secs to forward traffic! 
+port set attribute speed , port:9,speed:2500 (last_speed:0)
+uport = 1, fport=9, flow =1 
+lbd=enabled, port 1 , reach 3 secs, now forward traffic! 
+cat /json/config.jsn
+Unknown Command fcat
+
+
+BCMCLI> cat /json/config.jsn
+{"compCfgs":[{"sysCfg":{"cfg_descr":"1.4.8.0","dev_id":"I53162X","dev_name":"I53162X","dev_loc":"DurhamNC","dhcpv4":0,"ipv4":"192.168.1.10","subnet":"255.255.255.0","gw":"192.168.1.10","ssl":0,"l2Agetime":300,"sessTTL":5},"ECCFG":1},{"portCfg":[{"id":0,"descr":"","admin":1,"auto":1,"fdx":1,"speed":1000,"flow":1},{"id":1,"descr":"","admin":1,"auto":1,"fdx":1,"speed":1000,"flow":1},{"id":2,"descr":"","admin":1,"auto":1,"fdx":1,"speed":1000,"flow":1},{"id":3,"descr":"","admin":1,"auto":1,"fdx":1,"speed":1000,"flow":1},{"id":4,"descr":"","admin":1,"auto":1,"fdx":1,"speed":1000,"flow":1},{"id":5,"descr":"","admin":1,"auto":1,"fdx":1,"speed":1000,"flow":1}],"ECCFG":1},{"mirrorCfg":{"descr":"","destPort":255,"egressSrcPorts":"0x0","ingressSrcPorts":"0x0","egressSrcVLANs":[],"ingressSrcVLANs":[]},"ECCFG":1},{"vlanCfg":{"mode":"dot1q","dot1q":[{"vlan":1,"tag":"0x0","untag":"0x3fff"}],"portBased":[{"vlan":1,"mbr":"0x3fff"}]},"ECCFG":1},{"igmpSnoopCfg":{"global":{"admin":0,"grpMbrIntrvl":260,"rtrExpIntrvl":260,"blockUnknown":0},"vlanIntfCfg":[],"intfCfg":[]},"ECCFG":1},{"lldpCfg":{"tlvMask":"0x0000001F","intfCfg":[{"intf":0,"txMode":0,"rxMode":0,"reinit":2,"txIntvl":30,"txHold":4},{"intf":1,"txMode":0,"rxMode":0,"reinit":2,"txIntvl":30,"txHold":4},{"intf":2,"txMode":0,"rxMode":0,"reinit":2,"txIntvl":30,"txHold":4},{"intf":3,"txMode":0,"rxMode":0,"reinit":2,"txIntvl":30,"txHold":4},{"intf":4,"txMode":0,"rxMode":0,"reinit":2,"txIntvl":30,"txHold":4},{"intf":5,"txMode":0,"rxMode":0,"reinit":2,"txIntvl":30,"txHold":4},{"intf":6,"txMode":0,"rxMode":0,"reinit":2,"txIntvl":30,"txHold":4},{"intf":7,"txMode":0,"rxMode":0,"reinit":2,"txIntvl":30,"txHold":4},{"intf":8,"txMode":0,"rxMode":0,"reinit":2,"txIntvl":30,"txHold":4},{"intf":9,"txMode":0,"rxMode":0,"reinit":2,"txIntvl":30,"txHold":4},{"intf":10,"txMode":0,"rxMode":0,"reinit":2,"txIntvl":30,"txHold":4},{"intf":11,"txMode":0,"rxMode":0,"reinit":2,"txIntvl":30,"txHold":4},{"intf":12,"txMode":0,"rxMode":0,"reinit":2,"txIntvl":30,"txHold":4},{"intf":13,"txMode":0,"rxMode":0,"reinit":2,"txIntvl":30,"txHold":4}]},"ECCFG":1},{"lagCfg":{"hash":"mac-dasa-vlan","lags":[]},"ECCFG":1},{"rstpCfg":{"bridge":{"maxAge":20,"fwdDelay":15,"priority":32768,"forceVer":2,"txHoldCount":6},"intfCfg":[{"id":0,"stpEnabled":0,"pathCost":200000,"priority":128,"adminEdge":0,"autoEdge":1,"mChk":0,"p2pMac":1},{"id":1,"stpEnabled":0,"pathCost":200000,"priority":128,"adminEdge":0,"autoEdge":1,"mChk":0,"p2pMac":1},{"id":2,"stpEnabled":0,"pathCost":200000,"priority":128,"adminEdge":0,"autoEdge":1,"mChk":0,"p2pMac":1},{"id":3,"stpEnabled":0,"pathCost":200000,"priority":128,"adminEdge":0,"autoEdge":1,"mChk":0,"p2pMac":1},{"id":4,"stpEnabled":0,"pathCost":200000,"priority":128,"adminEdge":0,"autoEdge":1,"mChk":0,"p2pMac":1},{"id":5,"stpEnabled":0,"pathCost":200000,"priority":128,"adminEdge":0,"autoEdge":1,"mChk":0,"p2pMac":1}]},"ECCFG":1},{"qosCfg":{"dot1p":[{"tc":0,"mask":"0x02"},{"tc":1,"mask":"0x01"},{"tc":2,"mask":"0x04"},{"tc":3,"mask":"0x08"},{"tc":4,"mask":"0x10"},{"tc":5,"mask":"0x20"},{"tc":6,"mask":"0x40"},{"tc":7,"mask":"0x80"}],"dscp":[{"tc":0,"mask":"0xfefebffbfbfbfbff"},{"tc":1,"mask":"0x400"},{"tc":2,"mask":"0x40000"},{"tc":3,"mask":"0x4000000"},{"tc":4,"mask":"0x400000000"},{"tc":5,"mask":"0x400000000000"},{"tc":6,"mask":"0x1000000000000"},{"tc":7,"mask":"0x100000000000000"}],"schedData":[{"port":0,"mode":1,"rrWeights":[128,128,128,128,128,128,128,128]},{"port":1,"mode":0},{"port":2,"mode":0},{"port":3,"mode":0},{"port":4,"mode":0},{"port":5,"mode":0},{"port":6,"mode":0},{"port":7,"mode":0},{"port":8,"mode":0},{"port":9,"mode":0},{"port":10,"mode":0},{"port":11,"mode":0},{"port":12,"mode":0},{"port":13,"mode":0}],"rateLimits":[]},"ECCFG":1},{"dosCfg":{"macLand":0,"ipDaEqSa":0,"tcpDpEqSp":0,"udpDpEqSp":0,"tcpNullScan":0,"tcpXmasScan":0,"tcpSynFinScan":0,"tcpSync":0,"tcpHdrFrag":0,"ipv4IcmpFrag":0,"ipv6IcmpFrag":0,"icmp4LongPing":0,"icmp6LongPing":0},"ECCFG":1},{"stormCfg":{"unicast":{"admin":0,"meas":"kbps","level":0},"multicast":{"admin":0,"meas":"kbps","level":0},"broadcast":{"admin":0,"meas":"kbps","level":0}},"ECCFG":1},{"autovoipCfg":{"well_known_ouis":[{"id":0,"oui":"00:01:E3"},{"id":1,"oui":"00:09:6E"},{"id":2,"oui":"00:03:6B"},{"id":3,"oui":"00:E0:BB"},{"id":4,"oui":"00:E0:75"},{"id":5,"oui":"00:D0:1E"},{"id":6,"oui":"00:0F:E2"},{"id":7,"oui":"00:60:B9"}],"port_oui_map":[]},"ECCFG":1}]}
+
+BCMCLI> 
+
+BCMCLI> ls
+Usage: ls         <dir_name>
+Command Failed
+
+BCMCLI> 
+
+BCMCLI> ls /
+EDI_WEB/         2021-11-08 00:00:00     0000000000 bytes
+JSON/    2021-11-08 00:00:00     0000000000 bytes
+CERTS/   2021-11-08 00:00:00     0000000000 bytes
+
+BCMCLI> 
+
+BCMCLI> stop ip/arp traffic ! 
+reboot
+�
+
+
+
+BCM53158 SWITCH firmware Feb 22 2018
+boot_src = M7. Initializing M7
+
+
+Copyright 2015-2017 Broadcom Limited
+         All rights reserved
+
+Unit 0: ChipID: 53161 Rev 17
+Unit 0: Straps: 00005041
+Unit 0: PLL1 CH1 POSTDIV 13
+LED Boot up -> 0s-3s
+Unit 0: LED Refresh cycle config
+Unit 0: LED Delay config
+Unit 0: LED Strap load
+Loading LED Firmware
+.......
+Unit 0: bootloader LED Start
+Buffered Logs:
+OTP_FLAGS = 0x8c
+
+
+Broadcom ROBO OS Bootloader Version 2.4
+
+Bootloader: QSPI flash Model: winbond Size: 128 Mbit
+
+DEVFS: Initializing..
+DEVFS: Device /dev/ttyS0 registered
+DEVFS: Device /dev/flash0 registered
+Press any key to interrupt Auto Boot
+1 0 Autoboot starting...
+Bootloader: Loading image at 1
+Bootloader: Image Version SW-UT2206QG_1.00-0.07
+Watchdog timeout value is 1250000000 (4a817c80)
+
+
+Copyright 2015-2017 Broadcom Limited
+         All rights reserved
+
+ChipId: BCM53161 RevId: 17 
+Version Regs: 
+Software: ROBO_OS_REL_1_4_8 Build: Mon Nov 8 10:15:56 2021
+MPU enabled
+Unit 0: ChipID: 53161 Rev 17
+Unit 0: Straps: 00005041
+Unit 0: PLL1 CH1 POSTDIV 10
+LED Boot up -> 3s-6s
+Unit 0: LED Start
+Buffered Logs:
+OTP_FLAGS = 0x8c
+
+
+Watchdog Setup with timeout 1250000000 (4a817c80)
+Reading Primary Avenger OTP...
+Starting Dynamic AVS Using ROs on Primary Avenger...
+Applying Saved Core Voltage:9833 with saved DAC Code: 637.
+dwl......avs.c:AvsSetDac=637, cur_dac=637 delta=0 
+........avs.c:SetPVTctrl setting AVS_PVT_MNTR_CONFIG_PVT_MNTR_CTRL from 0x80 to 0x180 
+SetAvsVoltage - Final Result: 1
+Core Voltage After applying saved AVS results on Primary Avenger: 9825
+cbxi_slictcam_init()
+QSPI FLASH MPU region re-sized to 16 MB
+sal_fs_init_all:114 File system initialized
+sal_fs_init_all:122 File system obtained from TOC
+sal_fs_init_all:128 File system initialized
+cbxi_lin_init()
+cbxi_encap_init()
+cbx_port_init()
+Unit 0 Mac init Ports: 8 9 10 11 12 13 14 15 
+cbx_lag_init()
+cbx_port_create()
+Unit 0: PBMP_ALL(unit)=ff00
+cbxi_trap_init()
+cbxi_stg_init()
+cbxi_vlan_init()
+cbxi_l2_init()
+cbxi_mcast_init()
+cbx_mirror_init()
+cbx_meter_init()
+cbx_cosq_init()
+cbx_stat_init()
+cbx_cfp_init()
+cbx_auth_init()
+cbx_link_scan_init()
+cbx_link_scan_enable_set()
+cbx_pktio_init()
+LWIP successfully initialized
+LBD enabled 
+QOS disabled 
+port 8, pri=0, dp=0 
+port 9, pri=1, dp=0 
+port 10, pri=2, dp=0 
+port 11, pri=3, dp=0 
+port 12, pri=4, dp=0 
+port 13, pri=5, dp=0 
+extPhyIdentify: fport=8, phyaddr=1. id0=0x1c, id1=0xc848, type=3 ! 
+rtlPhyInit: phyaddr=1 ! 
+phyaddr=1, serdes = 0
+extPhyIdentify: fport=9, phyaddr=2. id0=0x1c, id1=0xc848, type=3 ! 
+rtlPhyInit: phyaddr=2 ! 
+phyaddr=2, serdes = 0
+extPhyIdentify: fport=10, phyaddr=3. id0=0x1c, id1=0xc848, type=3 ! 
+rtlPhyInit: phyaddr=3 ! 
+phyaddr=3, serdes = 0
+extPhyIdentify: fport=11, phyaddr=4. id0=0x1c, id1=0xc848, type=3 ! 
+rtlPhyInit: phyaddr=4 ! 
+phyaddr=4, serdes = 0
+extPhyIdentify: fport=12, phyaddr=5. id0=0xffff, id1=0xffff, type=0 ! 
+extPhyIdentify: fport=13, phyaddr=6. id0=0xffff, id1=0xffff, type=0 ! 
+LED Normal
+Broadcom Cli Starting....
+
+BCMCLI> cfg_load:533 Loading default configuration from '/json/config.jsn'
+Setting IP address to : 1.1.1.100
+Setting Network Mask to : 255.255.255.0
+Setting Gateway IP to : 1.1.1.1
+app_user_account_cfg_load:85 Failed to parse userCfg
+app_host_cfg_load:64 Failed to load TRUSTHOST configuration
+app_sntp_cfg_load:98 Failed to load SNTP configuration
+Failed to load Loopback Detection config from 'cfg:/config.jsn'
+
+Loaded default config for Loopback Detection from '/json/config.jsn'
+
+cfg_json_get:426 Invalid parameters
+Starting web server on port :80
+uport = 0, fport=8, flow =0 
+uport = 1, fport=9, flow =0 
+uport = 2, fport=10, flow =0 
+uport = 3, fport=11, flow =0 
+uport = 4, fport=12, flow =0 
+uport = 5, fport=13, flow =0 
+------->rand=0x5aa871c2 , link=1
+lbd=enabled, port 1 link up, wait 3 secs to forward traffic! 
+port set attribute speed , port:9,speed:2500 (last_speed:0)
+uport = 1, fport=9, flow =1 
+lbd=enabled, port 1 , reach 3 secs, now forward traffic! 
+
+
+BCMCLI> 
+
+BCMCLI> get_system
+System-FW-Version:SW-UT2206QG_1.00-0.07
+
+RTL PHY-1-Version:0x00000019
+
+RTL PHY-2-Version:0x00000019
+
+RTL PHY-3-Version:0x00000019
+
+RTL PHY-4-Version:0x00000019
+
+LOOP:1
+
+EEE:1
+
+Led On:0
+
+Turbo Mode:0
+
+IGMP:0
+
+Cut through:0
+
+Qos:0
+
+
+BCMCLI> 
+
+BCMCLI> stop ip/arp traffic ! 
+reboot␃␄
