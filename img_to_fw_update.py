@@ -48,6 +48,8 @@ def main(path_in: str, path_out: str, version_str):
         f_out.write(version_str + b"\x00" * (80 - len(version_str)))
         f_out.write(image_bytes)
 
+    print(f"Output written to {path_out}")
+
 
 if __name__ == '__main__':
     if len(sys.argv) < 3:
