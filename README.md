@@ -5,12 +5,31 @@ https://forum.openwrt.org/t/hacking-into-qnap-qsw-1105-5t-2-5g-broadcom-based-sw
 The QNAP QSW-2104-2S is based on Broadcom's Robo2 platform and has management capabilities that are artificially restricted.
 Fortunately it is possible to partially overcome these limitations, as described below.
 
-Most likely the APIs described below are also available on the QSW-2104-2T, QSW-1105-5T and QSW-1108-8T, as well as other Robo2 devices, but I strongly advise not to upload the modified firmware to those devices. If you are aware of other devices where this technique works please file an issue and I'll include them here.
+It appears that the APIs described below are also available on the QSW-2104-2T and QSW-1105-5T switches, as well as other Robo2 devices. I strongly advise not to upload the modified QSW-2104-2S firmware included in this repository to other devices. If you are aware of other Robo2 devices where these APIs are available please file an issue and I'll include them here.
 
-## Firmware update to keep web interface up longer (optional)
+Update: There is at least one report of the [QSW-1108-8T](https://github.com/danieltwagner/qsw-2104-2s/issues/4) using a different hardware platform that doesn't offer the management capabilities mentioned below. If you have a QSW-1108-8T that is based on Broadcom's Robo2 please do submit an issue so that I can amend this notice.
+
+## Establishing a connection
 
 During startup the switch listens for web requests at 1.1.1.100 for 1 minute. If during that time no login happens it will stop listening.
 Once a session has been established there is a 5 minute inactivity window after which the switch stops responding to web requests.
+
+If you find that your [switch doesn't listen at 1.1.1.100](https://github.com/danieltwagner/qsw-2104-2s/issues/5) immediately after booting, you'll need serial access (see further below) to enable IP traffic. Once you've connected to the serial console, you can check the status of the `stop_ip` configuration parameter and disable it if it's set:
+```
+BCMCLI> getparam stop_ip
+stop_ip => 1
+
+BCMCLI> setparam stop_ip 0
+Param stop_ip set to : 0
+
+BCMCLI> getparam stop_ip
+stop_ip => 0
+```
+
+After a reboot you should be able to reach the switch at 1.1.1.100.
+
+
+## Firmware update to keep web interface up longer (optional)
 
 The modified `fw-update-qsw-2104-2s-no-timeout.bin` firmware contained within this repository can be uploaded to stop the switch from cutting off web requests after 1 minute.
 
